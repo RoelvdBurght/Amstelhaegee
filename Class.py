@@ -12,6 +12,8 @@ class SingleHouse(House):
 
 class Bungalow(House):
     def __init__(self, x, y):
+        self.x = x
+        self.y = y
         self.width = 10
         self.height = 7.5
         self.value = 399000
