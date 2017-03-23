@@ -38,4 +38,7 @@ def addMaison(x, y):
 
 
 addSingle(20,3)
+addMaison(10,3)
+
+print(distanceBetweenQuick(h1, h2))
 mainloop()
