@@ -2,12 +2,9 @@ from tkinter import *
 import tkinter
 import Class
 
-
-canvas = Canvas(width=600, height=600, bg='white')
+scale = 3
+canvas = Canvas(width=160*scale, height=180*scale, bg='white')
 canvas.pack(expand=YES, fil=BOTH)
-
-canvas.create_rectangle(200, 200, 300, 300, width=5, fill='red')
-
 
 def addMaison(x, y):
     canvas.create_rectangle(x, y, (x + 11), (y + 10.5))

@@ -1,6 +1,5 @@
 class House:
-    def distanceTo(self, other):
-        print ("jeee")
+    x = 2
 
 class SingleHouse(House):
     def __init__(self, x, y):
@@ -32,3 +31,26 @@ class Water:
         self.x = x
         self.y = y
         self.shape = shape
+
+def dist(point1, point2):
+    height = point1[0] - point2[0]
+    width = point1[1] - point2[1]
+    return sqrt(height^2 + width^2)
+
+def distanceBetween(h1, h2):
+    if h2.x + h2.width < h1.x and h2.y + h2.height < h1.y:
+        return dist([h2.x + h2.width, h2.y + h2.height], [h1.x, h1.y])
+    elif h2.x > h1.x + h1.width and h2.y + h2.height < h1.y:
+        return dist([h2.x, h2.y + h2.height],[h1.x + h1.width, h1.y])
+    elif h2.x > h1.x + h1.width and h2.y > h1.y + h1.height:
+        return dist([h2.x, h2.y], [h1.x + h1.width, h1.y + h1.height])
+    elif h2.x + h2.width < h1.x and h2.y > h1.y + h1.height:
+        return dist([h2.x + h2.width, h2.y], [h1.x, h1.y + h1.height])
+    elif h2.x >= h1.x and h2.y + h2.width < h1.y:
+        return h1.y - (h2.y + h2.height)
+    elif h2.x >= h1.x:
+        return h2.y -(h1.y + h1.height)
+    elif h2.x + h2.width < h1.x:
+        return h1.x - (h2.x + h2.height)
+    else:
+        return h2.x - (h1.x + h1.width)
