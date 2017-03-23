@@ -52,7 +52,7 @@ y = Class.SingleHouse(10, 70)
 z = Class.SingleHouse(10, 100)
 
 
-print(y.distanceTo(x))
+print(x.distanceTo(y))
 addHouse(x)
 addHouse(y)
 addHouse(z)

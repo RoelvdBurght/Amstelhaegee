@@ -53,12 +53,12 @@ def shortestPointPair(h1, h2):
     return min
 
 def distanceBetween(h1, h2):
-    if h2.x >= h1.x and h2.x <= h1.x + h1.width:
+    if (h2.x >= h1.x and h2.x <= h1.x + h1.width) or (h2.x + h2.width >= h1.x and h2.x + h2.width <= h1.x + h1.width):
         if h2.y < h1.y:
             return h1.y - (h2.y + h2.height)
         else:
             return h2.y - (h1.y + h1.height)
-    elif h2.y >= h1.y and h2.y <= h1.y + h1.height:
+    elif (h2.y >= h1.y and h2.y <= h1.y + h1.height) or (h2.y + h2.height >= h1.y and h2.y + h2.height <= h1.y + h1.height):
         if h2.x < h1.x:
             return h1.x - (h2.x + h2.width)
         else:
