@@ -1,6 +1,6 @@
 class House:
     def distanceTo(self, other):
-        print ("jeee")
+        print('jee')
 
 class SingleHouse(House):
     def __init__(self, x, y):
@@ -32,3 +32,4 @@ class Water:
         self.x = x
         self.y = y
         self.shape = shape
+
