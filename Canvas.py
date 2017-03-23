@@ -44,10 +44,10 @@ def addHouse(house):
     else:
         addMaison(house.x, house.y)
 
-y = Class.Bungalow(35,60)
+y = Class.Bungalow(80,58)
 x = Class.SingleHouse(50,59)
 
-print(y.distanceTo(x))
+print(x.distanceTo(y))
 addHouse(x)
 addHouse(y)
 mainloop()
