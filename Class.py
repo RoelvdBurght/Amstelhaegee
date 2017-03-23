@@ -83,4 +83,14 @@ def distanceBetweenQuick(h1, h2):
     else:
         return shortestPointPair(h1, h2)
 
+x = SingleHouse(10, 50)
+y = SingleHouse(10, 70)
+z = SingleHouse(10, 50)
+lsit = [x,y,z]
 
+def checkOverlap(list):
+    for i in list[:-1]:
+        if (list[-1].distanceTo(list[i]) < list[-1].freespace ||
+            list[-1].distanceTo(list[i]) < list[i].freespace)
+            return false
+        return true
