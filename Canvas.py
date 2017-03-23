@@ -15,16 +15,16 @@ canvas.pack(expand=YES, fil=BOTH)
 def addSingle(x,y):
     width = scale(x)
     height = scale(y)
-    canvas.create_rectangle(width - scale(2), height - scale(2), (width + scale(8)) + scale(2),
-                            (height + scale(8)) + scale(2), fill='black')
+    #canvas.create_rectangle(width - scale(2), height - scale(2), (width + scale(8)) + scale(2),
+    #                        (height + scale(8)) + scale(2), fill='black')
     canvas.create_rectangle(width, height, (width + scale(8)), (height + scale(8)), fill='green')
 
 #draws 2 squares, first one is the free space, second is the bungalow
 def addBungalow(x,y):
     width = scale(x)
     height = scale(y)
-    canvas.create_rectangle(width - scale(3), height - scale(3), (width + scale(10)) + scale(3),
-                            (height + scale(7.5)) + scale(3), fill='black')
+    #canvas.create_rectangle(width - scale(3), height - scale(3), (width + scale(10)) + scale(3),
+    #                       (height + scale(7.5)) + scale(3), fill='black')
     canvas.create_rectangle(width, height, (width + scale(10)), (height + scale(7.5)), fill='purple')
 
 
@@ -32,15 +32,22 @@ def addBungalow(x,y):
 def addMaison(x, y):
     width = scale(x)
     height = scale(y)
-    canvas.create_rectangle(width - scale(6), height - scale(6), (width + scale(11)) + scale(6),
-                            (height + scale(10.5)) + scale(6), fill='black')
+    #canvas.create_rectangle(width - scale(6), height - scale(6), (width + scale(11)) + scale(6),
+    #                        (height + scale(10.5)) + scale(6), fill='black')
     canvas.create_rectangle(width, height, (width+scale(11)), (height+scale(10.5)), fill='red')
 
+def addHouse(house):
+    if house.width == 8:
+        addSingle(house.x, house.y)
+    elif house.width == 10:
+        addBungalow(house.x, house.y)
+    else:
+        addMaison(house.x, house.y)
 
-x = Class.SingleHouse(10,30)
-y = Class.SingleHouse(20,40)
+y = Class.Bungalow(35,60)
+x = Class.SingleHouse(50,59)
 
-print(Class.distanceBetweenQuick(x,y))
-addSingle(x.x,x.y)
-addSingle(y.x,y.y)
+print(y.distanceTo(x))
+addHouse(x)
+addHouse(y)
 mainloop()
