@@ -3,7 +3,7 @@ import tkinter
 import Class
 
 def scale(x):
-    return x * 4
+    return x * 3
 
 canvas = Canvas(width=scale(160), height=scale(180), bg='white')
 canvas.pack(expand=YES, fil=BOTH)
@@ -37,5 +37,5 @@ def addMaison(x, y):
     canvas.create_rectangle(width, height, (width+scale(11)), (height+scale(10.5)), fill='red')
 
 
-
+addSingle(20,3)
 mainloop()
