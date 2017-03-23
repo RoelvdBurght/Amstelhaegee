@@ -1,7 +1,7 @@
 import math
 class House:
     def distanceTo(self, other):
-        return distanceBetweenQuick(self, other)
+        return distanceBetween(self, other)
 
 class SingleHouse(House):
     def __init__(self, x, y):
@@ -52,7 +52,7 @@ def shortestPointPair(h1, h2):
             min = dist(l1[i], l2[i])
     return min
 
-def distanceBetweenQuick(h1, h2):
+def distanceBetween(h1, h2):
     if h2.x >= h1.x and h2.x <= h1.x + h1.width:
         if h2.y < h1.y:
             return h1.y - (h2.y + h2.height)
@@ -68,12 +68,18 @@ def distanceBetweenQuick(h1, h2):
 
 x = SingleHouse(10, 50)
 y = SingleHouse(10, 70)
-z = SingleHouse(10, 50)
-lsit = [x,y,z]
+z = SingleHouse(10, 100)
+myList = [x,y,z]
+
+
 
 def checkOverlap(list):
     for i in list[:-1]:
-        if (list[-1].distanceTo(list[i]) < list[-1].freespace ||
-            list[-1].distanceTo(list[i]) < list[i].freespace)
-            return false
-        return true
+        h1 = list[-1]
+        h2 = i
+        if h1.distanceTo(h2) < h1.freespace or h1.distanceTo(h2) < h2.freespace:
+        # if list[-1].distanceTo(list[i]) < list[-1].freespace or list[-1].distanceTo(list[i]) < list[i].freespace:
+            return False
+        return True
+
+print(checkOverlap(myList))
