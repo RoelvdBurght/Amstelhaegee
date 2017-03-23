@@ -1,4 +1,6 @@
 import math
+import random
+
 class House:
     def distanceTo(self, other):
         return distanceBetween(self, other)
@@ -68,18 +70,45 @@ def distanceBetween(h1, h2):
 
 x = SingleHouse(10, 50)
 y = SingleHouse(10, 70)
-z = SingleHouse(10, 100)
-myList = [x,y,z]
-
-
+z = SingleHouse(10, 52)
 
 def checkOverlap(list):
     for i in list[:-1]:
         h1 = list[-1]
         h2 = i
         if h1.distanceTo(h2) < h1.freespace or h1.distanceTo(h2) < h2.freespace:
-        # if list[-1].distanceTo(list[i]) < list[-1].freespace or list[-1].distanceTo(list[i]) < list[i].freespace:
             return False
         return True
 
-print(checkOverlap(myList))
+
+def placeMaison(list):
+    x = random.randint(0, scale(160))
+    y = random.randint(0, scale(160))
+    list.append(Maison(x,y))
+
+def placeBungalow(list):
+    x = random.randint(0, scale(160))
+    y = random.randint(0, scale(160))
+    list.append(Bungalow(x,y))
+
+
+def placeSingle(list):
+    x = random.randint(0, scale(160))
+    y = random.randint(0, scale(160))
+    list.append(SingleHouse(x,y))
+
+def makeMap(goal):
+    while True:
+        houseList = []
+        for i in range(0.15*goal):
+            placeMaison(houseList)
+            if checkOverlap(houseList) == False:
+                continue
+        for i in range(0.25*goal):
+            placeBungalow(houseList)
+            if checkOverlap(houseList) == False:
+                continue
+        for i in range(0.6*goal):
+            placeSingle(houseList)
+            if checkOverlap(houseList) == False:
+                continue
