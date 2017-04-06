@@ -60,8 +60,7 @@ def addHouse(list):
 
 p = Class.makeMap(20)
 print(p)
-for i in range(len(p) - 1):
-
+for i in range(len(p) - 1)
     print(p[i].distanceTo(p[i+1]))
 #for i in range(len(p)):
 
