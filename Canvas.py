@@ -37,8 +37,10 @@ def addMaison(x, y):
     canvas.create_rectangle(width, height, (width+scale(11)), (height+scale(10.5)), fill='red')
 
 
-addSingle(20,3)
-addMaison(10,3)
+x = Class.SingleHouse(10,30)
+y = Class.SingleHouse(20,40)
 
-print(distanceBetweenQuick(h1, h2))
+print(Class.distanceBetweenQuick(x,y))
+addSingle(x.x,x.y)
+addSingle(y.x,y.y)
 mainloop()

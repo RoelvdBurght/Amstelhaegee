@@ -1,3 +1,4 @@
+import math
 class House:
     def distanceTo(self, other):
         print('jee')
@@ -44,7 +45,7 @@ def distanceBetween(h1, h2):
         return dist([h2.x, h2.y], [h1.x + h1.width, h1.y + h1.height])
     elif h2.x + h2.width < h1.x and h2.y > h1.y + h1.height:
         return dist([h2.x + h2.width, h2.y], [h1.x, h1.y + h1.height])
-    elif h2.x >= h1.x and h2.y + h2.width < h1.y:
+    elif h2.x >= h1.x and h2.y + h2.height < h1.y:
         return h1.y - (h2.y + h2.height)
     elif h2.x >= h1.x:
         return h2.y -(h1.y + h1.height)
@@ -57,13 +58,13 @@ def distanceBetween(h1, h2):
 def dist(point1, point2):
     height = point1[0] - point2[0]
     width = point1[1] - point2[1]
-    return sqrt(height^2 + width^2)
+    return math.sqrt(abs(height^2) + abs(width^2))
 
 def shortestPointPair(h1, h2):
     l1 = [[h1.x, h1.y], [h1.x + h1.width, h1.y], [h1.x + h1.width, h1.y + h1.height], [h1.x, h1.y + h1.height]]
     l2 = [[h2.x + h2.width, h2.y + h2.height], [h2.x, h2.y + h2.height], [h2.x, h2.y], [h2.x + h2.width, h2.y]]
-    min = 0
-    for i in range(4):
+    min = dist(l1[0], l2[0])
+    for i in range(1,4):
         if dist(l1[i], l2[i]) < min:
             min = dist(l1[i], l2[i])
     return min
@@ -81,4 +82,5 @@ def distanceBetweenQuick(h1, h2):
             return h2.x - (h1.x + h1.width)
     else:
         return shortestPointPair(h1, h2)
+
 
