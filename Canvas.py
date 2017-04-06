@@ -15,16 +15,16 @@ canvas.pack(expand=YES, fil=BOTH)
 def addSingle(x,y):
     width = scale(x)
     height = scale(y)
-    canvas.create_rectangle(width - scale(2), height - scale(2), (width + scale(8)) + scale(2),
-                            (height + scale(8)) + scale(2), fill='black')
+    #canvas.create_rectangle(width - scale(2), height - scale(2), (width + scale(8)) + scale(2),
+    #                        (height + scale(8)) + scale(2), fill='black')
     canvas.create_rectangle(width, height, (width + scale(8)), (height + scale(8)), fill='green')
 
 #draws 2 squares, first one is the free space, second is the bungalow
 def addBungalow(x,y):
     width = scale(x)
     height = scale(y)
-    canvas.create_rectangle(width - scale(3), height - scale(3), (width + scale(10)) + scale(3),
-                            (height + scale(7.5)) + scale(3), fill='black')
+    #canvas.create_rectangle(width - scale(3), height - scale(3), (width + scale(10)) + scale(3),
+    #                       (height + scale(7.5)) + scale(3), fill='black')
     canvas.create_rectangle(width, height, (width + scale(10)), (height + scale(7.5)), fill='purple')
 
 
@@ -32,15 +32,25 @@ def addBungalow(x,y):
 def addMaison(x, y):
     width = scale(x)
     height = scale(y)
-    canvas.create_rectangle(width - scale(6), height - scale(6), (width + scale(11)) + scale(6),
-                            (height + scale(10.5)) + scale(6), fill='black')
+    #canvas.create_rectangle(width - scale(6), height - scale(6), (width + scale(11)) + scale(6),
+    #                        (height + scale(10.5)) + scale(6), fill='black')
     canvas.create_rectangle(width, height, (width+scale(11)), (height+scale(10.5)), fill='red')
 
+# itereer over huizen
+def addHouse(list):
+    for i in range(len(list)):
+        if list[i].width == 8:
+            addSingle(list[i].x, list[i].y)
+        elif list[i].width == 10:
+            addBungalow(list[i].x, list[i].y)
+        elif list[i].width == 11:
+            addMaison(list[i].x, list[i].y)
+        else:
+            raise TypeError ("Item in list in not a House")
 
-x = Class.SingleHouse(10,30)
-y = Class.SingleHouse(20,40)
+p = Class.makeMap(20)
+for i in range(len(p)):
+    print(p[i].x)
+addHouse(p)
 
-print(Class.distanceBetweenQuick(x,y))
-addSingle(x.x,x.y)
-addSingle(y.x,y.y)
 mainloop()
