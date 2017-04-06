@@ -68,47 +68,47 @@ def distanceBetween(h1, h2):
     else:
         return shortestPointPair(h1, h2)
 
-x = SingleHouse(10, 50)
-y = SingleHouse(10, 70)
-z = SingleHouse(10, 52)
-
 def checkOverlap(list):
     for i in list[:-1]:
         h1 = list[-1]
         h2 = i
+        print(h1.distanceTo(h2), "distance TO")
         if h1.distanceTo(h2) < h1.freespace or h1.distanceTo(h2) < h2.freespace:
             return False
         return True
 
-
 def placeMaison(list):
-    x = random.randint(0, scale(160))
-    y = random.randint(0, scale(160))
+    x = random.randint(0, 160)
+    y = random.randint(0, 160)
     list.append(Maison(x,y))
 
 def placeBungalow(list):
-    x = random.randint(0, scale(160))
-    y = random.randint(0, scale(160))
+    x = random.randint(0, 160)
+    y = random.randint(0, 160)
     list.append(Bungalow(x,y))
 
 
 def placeSingle(list):
-    x = random.randint(0, scale(160))
-    y = random.randint(0, scale(160))
+    x = random.randint(0, 160)
+    y = random.randint(0, 160)
     list.append(SingleHouse(x,y))
 
 def makeMap(goal):
     while True:
+        numberOfMaisons = int(0.15*goal)
+        numberOfBungalows = int(0.25*goal)
+        numberOfSingles = int(0.6*goal)
         houseList = []
-        for i in range(0.15*goal):
+        for i in range(numberOfMaisons):
             placeMaison(houseList)
             if checkOverlap(houseList) == False:
                 continue
-        for i in range(0.25*goal):
+        for i in range(numberOfBungalows):
             placeBungalow(houseList)
             if checkOverlap(houseList) == False:
                 continue
-        for i in range(0.6*goal):
+        for i in range(numberOfSingles):
             placeSingle(houseList)
             if checkOverlap(houseList) == False:
                 continue
+        return houseList

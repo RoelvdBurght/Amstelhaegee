@@ -36,30 +36,21 @@ def addMaison(x, y):
     #                        (height + scale(10.5)) + scale(6), fill='black')
     canvas.create_rectangle(width, height, (width+scale(11)), (height+scale(10.5)), fill='red')
 
-
-
 # itereer over huizen
 def addHouse(list):
-    for house in list:
-        if house.width == 8:
-            addSingle(house.x, house.y)
-        elif house.width == 10:
-            addBungalow(house.x, house.y)
+    for i in range(len(list)):
+        if list[i].width == 8:
+            addSingle(list[i].x, list[i].y)
+        elif list[i].width == 10:
+            addBungalow(list[i].x, list[i].y)
+        elif list[i].width == 11:
+            addMaison(list[i].x, list[i].y)
         else:
-            addMaison(house.x, house.y)
+            raise TypeError ("Item in list in not a House")
 
+p = Class.makeMap(20)
+for i in range(len(p)):
+    print(p[i].x)
+addHouse(p)
 
-x = Class.SingleHouse(10, 40)
-y = Class.SingleHouse(10, 70)
-z = Class.SingleHouse(10, 50)
-
-myList = [x,y,z]
-
-addHouse(myList)
-
-print(Class.checkOverlap(myList))
-
-addHouse(x)
-addHouse(y)
-addHouse(z)
 mainloop()
