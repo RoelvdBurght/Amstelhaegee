@@ -49,8 +49,10 @@ def addHouse(list):
             raise TypeError ("Item in list in not a House")
 
 p = Class.makeMap(20)
+""""
 for i in range(len(p)):
     print(p[i].x)
+"""
 addHouse(p)
 
 mainloop()

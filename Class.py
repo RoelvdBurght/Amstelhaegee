@@ -72,7 +72,6 @@ def checkOverlap(list):
     for i in list[:-1]:
         h1 = list[-1]
         h2 = i
-        print(h1.distanceTo(h2), "distance TO")
         if h1.distanceTo(h2) < h1.freespace or h1.distanceTo(h2) < h2.freespace:
             return False
         return True
@@ -86,7 +85,6 @@ def placeBungalow(list):
     x = random.randint(0, 160)
     y = random.randint(0, 160)
     list.append(Bungalow(x,y))
-
 
 def placeSingle(list):
     x = random.randint(0, 160)
