@@ -68,17 +68,20 @@ def distanceBetween(h1, h2):
     else:
         return shortestPointPair(h1, h2)
 
-def closestTo(houseList):
-    closestHouses = []
-    for j in range(len(houseList)):
-        h1 = houseList[j]
-        closest = h1.distanceTo(houseList[j])
-        for i in range(len(houseList) - 1):
-            x = h1.distanceTo(houseList[i])
-            if x < closest:
-                closest = x
-                print(closest)
-    return closest
+
+
+def closestTo(houseList, houseNum):
+    houseToComp = houseList[houseNum]
+    houseList.remove(houseList[houseNum])
+    min = houseToComp.distanceTo(houseList[-1])
+    for i in range(len(houseList) - 1):
+        x = houseToComp.distanceTo(houseList[i])
+        if x < min:
+            min = x
+            print("dist", min)
+            print("house", i)
+    return min
+
 
 def checkOverlap(houseList):
     h1 = houseList[-1]
