@@ -37,20 +37,33 @@ def addMaison(x, y):
     canvas.create_rectangle(width, height, (width+scale(11)), (height+scale(10.5)), fill='red')
 
 # itereer over huizen
+def addNumber(i, list):
+    canvas.create_text(scale(list.x), scale(list.y), fill="black", font="Times 10 bold",text= i)
+
+
+
 def addHouse(list):
     for i in range(len(list)):
         if list[i].width == 8:
             addSingle(list[i].x, list[i].y)
+            addNumber(i, list[i])
         elif list[i].width == 10:
             addBungalow(list[i].x, list[i].y)
+            addNumber(i, list[i])
         elif list[i].width == 11:
             addMaison(list[i].x, list[i].y)
+            addNumber(i, list[i])
         else:
             raise TypeError ("Item in list in not a House")
 
+
 p = Class.makeMap(20)
-for i in range(len(p)):
-    print(p[i].x)
+print(p)
+for i in range(len(p) - 1):
+
+    print(p[i].distanceTo(p[i+1]))
+#for i in range(len(p)):
+
 addHouse(p)
 
 mainloop()

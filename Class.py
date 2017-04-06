@@ -72,25 +72,25 @@ def checkOverlap(list):
     for i in list[:-1]:
         h1 = list[-1]
         h2 = i
-        print(h1.distanceTo(h2), "distance TO")
+       #print(h1.distanceTo(h2), "distance TO")
         if h1.distanceTo(h2) < h1.freespace or h1.distanceTo(h2) < h2.freespace:
             return False
         return True
 
 def placeMaison(list):
-    x = random.randint(0, 160)
-    y = random.randint(0, 160)
+    x = random.randint(0, 149)
+    y = random.randint(0, 149)
     list.append(Maison(x,y))
 
 def placeBungalow(list):
-    x = random.randint(0, 160)
-    y = random.randint(0, 160)
+    x = random.randint(0, 150)
+    y = random.randint(0, 152)
     list.append(Bungalow(x,y))
 
 
 def placeSingle(list):
-    x = random.randint(0, 160)
-    y = random.randint(0, 160)
+    x = random.randint(0, 152)
+    y = random.randint(0, 152)
     list.append(SingleHouse(x,y))
 
 def makeMap(goal):
