@@ -35,22 +35,40 @@ def addMaison(x, y):
     #                        (height + scale(10.5)) + scale(6), fill='black')
     canvas.create_rectangle(width, height, (width+scale(11)), (height+scale(10.5)), fill='red')
 
+# itereer over huizen
+def addNumber(i, list):
+    canvas.create_text(scale(list.x), scale(list.y), fill="black", font="Times 10 bold",text= i)
+
+
+
 # tieft die huizen op de canvas
 # input: lijst gemaakt door makeMap
 def addHouse(list):
     for i in range(len(list)):
         if list[i].width == 8:
             addSingle(list[i].x, list[i].y)
+            addNumber(i, list[i])
         elif list[i].width == 10:
             addBungalow(list[i].x, list[i].y)
+            addNumber(i, list[i])
         elif list[i].width == 11:
             addMaison(list[i].x, list[i].y)
+            addNumber(i, list[i])
         else:
             raise TypeError ("Item in list in not a House")
 
+
+p = Class.makeMap(20)
+Class.closestTo(p)
+print(p)
+"""
+for i in range(len(p) - 1):
+    dist = []
+    dist.append(p[i].distanceTo(p[i+1]))
+    print("distance between house", i, 'and house', i + 1, "=", dist)
+#for i in range(len(p)):
+"""
 p = Class.makeMap(90)
 addHouse(p)
-#addMaison(1,1)
-
 
 mainloop()

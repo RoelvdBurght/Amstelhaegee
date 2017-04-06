@@ -72,6 +72,19 @@ def distanceBetween(h1, h2):
 
 # Controleert of een kaart tot nu toe geldig is
 def isMapValid(houseList):
+def closestTo(houseList):
+    closestHouses = []
+    for j in range(len(houseList)):
+        h1 = houseList[j]
+        closest = h1.distanceTo(houseList[j])
+        for i in range(len(houseList) - 1):
+            x = h1.distanceTo(houseList[i])
+            if x < closest:
+                closest = x
+                print(closest)
+    return closest
+
+def checkOverlap(houseList):
     h1 = houseList[-1]
     for i in range(len(houseList) - 1):
         h2 = houseList[i]
