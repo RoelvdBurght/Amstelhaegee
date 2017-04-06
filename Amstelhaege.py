@@ -1,7 +1,5 @@
 import Class
 import Canvas
 
-myList = Class.makeMap(20)
-print(myList)
-print(myList[0].width)
+#myList = Class.makeMap(20)
 #Canvas.addHouse(myList)

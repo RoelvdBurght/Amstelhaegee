@@ -68,30 +68,35 @@ def distanceBetween(h1, h2):
     else:
         return shortestPointPair(h1, h2)
 
-def checkOverlap(list):
-    for i in list[:-1]:
-        h1 = list[-1]
-        h2 = i
-       #print(h1.distanceTo(h2), "distance TO")
+def checkOverlap(houseList):
+    h1 = houseList[-1]
+    for i in range(len(houseList) - 1):
+        h2 = houseList[i]
         if h1.distanceTo(h2) < h1.freespace or h1.distanceTo(h2) < h2.freespace:
-            return False
-        return True
+            return True
+    return False
 
 def placeMaison(list):
     x = random.randint(0, 149)
     y = random.randint(0, 149)
-    list.append(Maison(x,y))
+    maison = Maison(x,y)
+    list.append(maison)
+    return maison
 
 def placeBungalow(list):
     x = random.randint(0, 150)
     y = random.randint(0, 152)
-    list.append(Bungalow(x,y))
+    bungalow = Bungalow(x,y)
+    list.append(bungalow)
+    return bungalow
 
 
 def placeSingle(list):
     x = random.randint(0, 152)
     y = random.randint(0, 152)
-    list.append(SingleHouse(x,y))
+    singleHouse = SingleHouse(x,y)
+    list.append(singleHouse)
+    return singleHouse
 
 def makeMap(goal):
     while True:
@@ -99,16 +104,22 @@ def makeMap(goal):
         numberOfBungalows = int(0.25*goal)
         numberOfSingles = int(0.6*goal)
         houseList = []
-        for i in range(numberOfMaisons):
-            placeMaison(houseList)
-            if checkOverlap(houseList) == False:
+        while numberOfMaisons != 0:
+            maison = placeMaison(houseList)
+            if checkOverlap(houseList) == True:
+                houseList.remove(maison)
                 continue
-        for i in range(numberOfBungalows):
-            placeBungalow(houseList)
-            if checkOverlap(houseList) == False:
+            numberOfMaisons -= 1
+        while numberOfBungalows != 0:
+            bungalow = placeBungalow(houseList)
+            if checkOverlap(houseList) == True:
+                houseList.remove(bungalow)
                 continue
-        for i in range(numberOfSingles):
-            placeSingle(houseList)
-            if checkOverlap(houseList) == False:
+            numberOfBungalows -= 1
+        while numberOfSingles != 0:
+            single = placeSingle(houseList)
+            if checkOverlap(houseList) == True:
+                houseList.remove(single)
                 continue
+            numberOfSingles -= 1
         return houseList

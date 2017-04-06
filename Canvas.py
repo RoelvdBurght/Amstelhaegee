@@ -1,5 +1,4 @@
 from tkinter import *
-import tkinter
 import Class
 
 def scale(x):
@@ -42,6 +41,8 @@ def addNumber(i, list):
 
 
 
+# tieft die huizen op de canvas
+# input: lijst gemaakt door makeMap
 def addHouse(list):
     for i in range(len(list)):
         if list[i].width == 8:
