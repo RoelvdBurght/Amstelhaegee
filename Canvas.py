@@ -1,5 +1,4 @@
 from tkinter import *
-import tkinter
 import Class
 
 def scale(x):
@@ -36,7 +35,8 @@ def addMaison(x, y):
     #                        (height + scale(10.5)) + scale(6), fill='black')
     canvas.create_rectangle(width, height, (width+scale(11)), (height+scale(10.5)), fill='red')
 
-# itereer over huizen
+# tieft die huizen op de canvas
+# input: lijst gemaakt door makeMap
 def addHouse(list):
     for i in range(len(list)):
         if list[i].width == 8:
@@ -48,9 +48,8 @@ def addHouse(list):
         else:
             raise TypeError ("Item in list in not a House")
 
-p = Class.makeMap(20)
-for i in range(len(p)):
-    print(p[i].x)
+#p = Class.makeMap(20)
+#print(p)
 addHouse(p)
 
 mainloop()
