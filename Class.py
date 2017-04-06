@@ -45,6 +45,7 @@ def dist(point1, point2):
     width = point1[1] - point2[1]
     return math.sqrt(math.pow(abs(height), 2) + math.pow(abs(width), 2))
 
+# Neemt de vier relevante hoekpunten van twee vierkanten en kijkt welk paar het dichts bij elkaar ligt
 def shortestPointPair(h1, h2):
     l1 = [[h1.x, h1.y], [h1.x + h1.width, h1.y], [h1.x + h1.width, h1.y + h1.height], [h1.x, h1.y + h1.height]]
     l2 = [[h2.x + h2.width, h2.y + h2.height], [h2.x, h2.y + h2.height], [h2.x, h2.y], [h2.x + h2.width, h2.y]]
@@ -54,6 +55,7 @@ def shortestPointPair(h1, h2):
             min = dist(l1[i], l2[i])
     return min
 
+# Rekent de kortste afstand uit tussen twee huizen
 def distanceBetween(h1, h2):
     if (h2.x >= h1.x and h2.x <= h1.x + h1.width) or (h2.x + h2.width >= h1.x and h2.x + h2.width <= h1.x + h1.width):
         if h2.y < h1.y:
@@ -68,24 +70,33 @@ def distanceBetween(h1, h2):
     else:
         return shortestPointPair(h1, h2)
 
-def checkOverlap(houseList):
+# Controleert of een kaart tot nu toe geldig is
+def isMapValid(houseList):
     h1 = houseList[-1]
     for i in range(len(houseList) - 1):
         h2 = houseList[i]
         if h1.distanceTo(h2) < h1.freespace or h1.distanceTo(h2) < h2.freespace:
-            return True
-    return False
+            return False
+        if overlap(h1, h2) or overlap(h2, h1):
+            return False
+    return True
 
+def overlap(h1, h2):
+    if h2.x + h2.width <= h1.x or h2.y + h2.height <= h1.y or h2.x >= h1.x + h1.width or h2.y >= h1.y + h1.height:
+        return False
+    return True
+
+# Plaatst een maison in de lijst met alle huizen
 def placeMaison(list):
     x = random.randint(0, 149)
-    y = random.randint(0, 149)
+    y = random.randint(0, 169)
     maison = Maison(x,y)
     list.append(maison)
     return maison
 
 def placeBungalow(list):
     x = random.randint(0, 150)
-    y = random.randint(0, 152)
+    y = random.randint(0, 172)
     bungalow = Bungalow(x,y)
     list.append(bungalow)
     return bungalow
@@ -93,7 +104,7 @@ def placeBungalow(list):
 
 def placeSingle(list):
     x = random.randint(0, 152)
-    y = random.randint(0, 152)
+    y = random.randint(0, 172)
     singleHouse = SingleHouse(x,y)
     list.append(singleHouse)
     return singleHouse
@@ -106,19 +117,19 @@ def makeMap(goal):
         houseList = []
         while numberOfMaisons != 0:
             maison = placeMaison(houseList)
-            if checkOverlap(houseList) == True:
+            if isMapValid(houseList) == False:
                 houseList.remove(maison)
                 continue
             numberOfMaisons -= 1
         while numberOfBungalows != 0:
             bungalow = placeBungalow(houseList)
-            if checkOverlap(houseList) == True:
+            if isMapValid(houseList) == False:
                 houseList.remove(bungalow)
                 continue
             numberOfBungalows -= 1
         while numberOfSingles != 0:
             single = placeSingle(houseList)
-            if checkOverlap(houseList) == True:
+            if isMapValid(houseList) == False:
                 houseList.remove(single)
                 continue
             numberOfSingles -= 1

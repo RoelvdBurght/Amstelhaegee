@@ -48,8 +48,9 @@ def addHouse(list):
         else:
             raise TypeError ("Item in list in not a House")
 
-#p = Class.makeMap(20)
-#print(p)
+p = Class.makeMap(90)
 addHouse(p)
+#addMaison(1,1)
+
 
 mainloop()
