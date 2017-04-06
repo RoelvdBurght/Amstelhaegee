@@ -1,4 +1,5 @@
 from tkinter import *
+
 import Class
 
 def scale(x):
@@ -59,9 +60,12 @@ def addHouse(list):
 
 
 p = Class.makeMap(20)
+Class.closestTo(p)
 print(p)
-for i in range(len(p) - 1)
-    print(p[i].distanceTo(p[i+1]))
+for i in range(len(p) - 1):
+    dist = []
+    dist.append(p[i].distanceTo(p[i+1]))
+    print("distance between house", i, 'and house', i + 1, "=", dist)
 #for i in range(len(p)):
 
 addHouse(p)
