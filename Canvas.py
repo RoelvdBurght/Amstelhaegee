@@ -27,7 +27,6 @@ def addBungalow(x,y):
     #                       (height + scale(7.5)) + scale(3), fill='black')
     canvas.create_rectangle(width, height, (width + scale(10)), (height + scale(7.5)), fill='purple')
 
-
 #draws 2 squares, first one is the free space needed, second is the maison
 def addMaison(x, y):
     width = scale(x)
@@ -56,8 +55,10 @@ def addHouse(list):
         else:
             raise TypeError ("Item in list in not a House")
 
-p = Class.makeMap(60)
-Class.closestTo2(p,19)
-addHouse(p)
+canvas.create_line(scale(2),scale(2), scale(4), scale(2))
+canvas.create_line(scale(2), scale(4), scale(5), scale(4))
+canvas.create_line(scale(2), scale(6), scale(8), scale(6))
 
+p = Class.makeMap(100)
+addHouse(p)
 mainloop()
