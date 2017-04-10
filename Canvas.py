@@ -1,4 +1,5 @@
 from tkinter import *
+import tkinter
 import Class
 
 def scale(x):
@@ -35,7 +36,7 @@ def addMaison(x, y):
     #                        (height + scale(10.5)) + scale(6), fill='black')
     canvas.create_rectangle(width, height, (width+scale(11)), (height+scale(10.5)), fill='red')
 
-# itereer over huizen
+# voegt nummer toe aan huizen op canvas
 def addNumber(i, list):
     canvas.create_text(scale(list.x), scale(list.y), fill="black", font="Times 10 bold",text= i)
 
@@ -55,18 +56,8 @@ def addHouse(list):
         else:
             raise TypeError ("Item in list in not a House")
 
-
-p = Class.makeMap(20)
-Class.closestTo(p, 0)
-print(p)
-"""
-for i in range(len(p) - 1):
-    dist = []
-    dist.append(p[i].distanceTo(p[i+1]))
-    print("distance between house", i, 'and house', i + 1, "=", dist)
-#for i in range(len(p)):
-"""
-p = Class.makeMap(90)
+p = Class.makeMap(60)
+Class.closestTo2(p,19)
 addHouse(p)
 
 mainloop()
