@@ -1,11 +1,11 @@
 import math
 import random
-random.seed(1234)
+#random.seed(1234)
 
 
 class House:
     def distanceTo(self, other):
-        return distanceBetween(self, other)
+        return minDistanceBetween(self, other)
 
 class SingleHouse(House):
     def __init__(self, x, y):
@@ -56,6 +56,9 @@ def shortestPointPair(h1, h2):
             min = dist(l1[i], l2[i])
     return min
 
+def minDistanceBetween(h1,h2):
+    return min(distanceBetween(h1,h2), distanceBetween(h2,h1))
+
 def distanceBetween(h1, h2):
     if (h2.x >= h1.x and h2.x <= h1.x + h1.width) or (h2.x + h2.width >= h1.x and h2.x + h2.width <= h1.x + h1.width):
         if h2.y < h1.y:
@@ -79,8 +82,6 @@ def closestTo(houseList, houseNum):
         x = houseToComp.distanceTo(houseList[i])
         if x < min:
             min = x
-            #print("dist", min)
-            #print("house", i)
     return min
 
 def closestTo2(houseList, houseNum):
@@ -93,8 +94,6 @@ def closestTo2(houseList, houseNum):
         x = houseToComp.distanceTo(houseList[i])
         if x < min:
             min = x
-            #print("dist", min)
-            #print("house", i)
     return min
 
 def checkOverlap(houseList):
