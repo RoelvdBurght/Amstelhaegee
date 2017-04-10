@@ -57,7 +57,7 @@ def addHouse(list):
 
 
 p = Class.makeMap(20)
-Class.closestTo(p)
+Class.closestTo(p, 0)
 print(p)
 """
 for i in range(len(p) - 1):

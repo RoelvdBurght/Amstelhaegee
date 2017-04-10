@@ -70,6 +70,20 @@ def distanceBetween(h1, h2):
     else:
         return shortestPointPair(h1, h2)
 
+
+
+def closestTo(houseList, houseNum):
+    houseToComp = houseList[houseNum]
+    houseList.remove(houseList[houseNum])
+    min = houseToComp.distanceTo(houseList[-1])
+    for i in range(len(houseList) - 1):
+        x = houseToComp.distanceTo(houseList[i])
+        if x < min:
+            min = x
+            print("dist", min)
+            print("house", i)
+    return min
+
 # Controleert of een kaart tot nu toe geldig is
 def closestTo(houseList):
     closestHouses = []
