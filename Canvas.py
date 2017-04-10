@@ -40,8 +40,6 @@ def addMaison(x, y):
 def addNumber(i, list):
     canvas.create_text(scale(list.x), scale(list.y), fill="black", font="Times 10 bold",text= i)
 
-
-
 # tieft die huizen op de canvas
 # input: lijst gemaakt door makeMap
 def addHouse(list):
@@ -58,9 +56,8 @@ def addHouse(list):
         else:
             raise TypeError ("Item in list in not a House")
 
-
 p = Class.makeMap(60)
-Class.closestTo(p)
+Class.closestTo2(p,19)
 addHouse(p)
 
 mainloop()

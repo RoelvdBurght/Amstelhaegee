@@ -1,5 +1,7 @@
 import math
 import random
+random.seed(1234)
+
 
 class House:
     def distanceTo(self, other):
@@ -68,9 +70,8 @@ def distanceBetween(h1, h2):
     else:
         return shortestPointPair(h1, h2)
 
-
-
 def closestTo(houseList, houseNum):
+    print (houseList[houseNum])
     houseToComp = houseList[houseNum]
     houseList.remove(houseList[houseNum])
     min = houseToComp.distanceTo(houseList[-1])
@@ -78,10 +79,23 @@ def closestTo(houseList, houseNum):
         x = houseToComp.distanceTo(houseList[i])
         if x < min:
             min = x
-            print("dist", min)
-            print("house", i)
+            #print("dist", min)
+            #print("house", i)
     return min
 
+def closestTo2(houseList, houseNum):
+    print (houseList[houseNum])
+    print(houseList[houseNum].x, houseList[houseNum].y)
+    houseToComp = houseList[houseNum]
+    houseList.remove(houseList[houseNum])
+    min = houseToComp.distanceTo(houseList[-1])
+    for i in range(len(houseList) - 1):
+        x = houseToComp.distanceTo(houseList[i])
+        if x < min:
+            min = x
+            #print("dist", min)
+            #print("house", i)
+    return min
 
 def checkOverlap(houseList):
     h1 = houseList[-1]
