@@ -71,7 +71,6 @@ def distanceBetween(h1, h2):
         return shortestPointPair(h1, h2)
 
 # Controleert of een kaart tot nu toe geldig is
-def isMapValid(houseList):
 def closestTo(houseList):
     closestHouses = []
     for j in range(len(houseList)):

@@ -39,8 +39,6 @@ def addMaison(x, y):
 def addNumber(i, list):
     canvas.create_text(scale(list.x), scale(list.y), fill="black", font="Times 10 bold",text= i)
 
-
-
 # tieft die huizen op de canvas
 # input: lijst gemaakt door makeMap
 def addHouse(list):
