@@ -106,23 +106,22 @@ def checkOverlap(houseList):
     return False
 
 def placeMaison(list):
-    x = random.randint(0, 149)
-    y = random.randint(0, 149)
+    x = random.randint(6, 149)
+    y = random.randint(6, 169)
     maison = Maison(x,y)
     list.append(maison)
     return maison
 
 def placeBungalow(list):
-    x = random.randint(0, 150)
-    y = random.randint(0, 152)
+    x = random.randint(3, 150)
+    y = random.randint(3, 172)
     bungalow = Bungalow(x,y)
     list.append(bungalow)
     return bungalow
 
-
 def placeSingle(list):
-    x = random.randint(0, 152)
-    y = random.randint(0, 152)
+    x = random.randint(2, 152)
+    y = random.randint(2, 172)
     singleHouse = SingleHouse(x,y)
     list.append(singleHouse)
     return singleHouse

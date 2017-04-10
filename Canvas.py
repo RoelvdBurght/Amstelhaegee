@@ -56,8 +56,9 @@ def addHouse(list):
         else:
             raise TypeError ("Item in list in not a House")
 
-p = Class.makeMap(60)
-Class.closestTo2(p,19)
+p = Class.makeMap(100)
+print(Class.distanceBetween(p[10], p[40]))
+
 addHouse(p)
 
 mainloop()
