@@ -56,9 +56,6 @@ def shortestPointPair(h1, h2):
             min = dist(l1[i], l2[i])
     return min
 
-def minDistanceBetween(h1,h2):
-    return min(distanceBetween(h1,h2), distanceBetween(h2,h1))
-
 def distanceBetween(h1, h2):
     if (h2.x >= h1.x and h2.x <= h1.x + h1.width) or (h2.x + h2.width >= h1.x and h2.x + h2.width <= h1.x + h1.width):
         if h2.y < h1.y:
@@ -73,11 +70,42 @@ def distanceBetween(h1, h2):
     else:
         return shortestPointPair(h1, h2)
 
+""" deze is niks
 def closestTo(houseList, houseNum):
     print (houseList[houseNum])
+"""
+
+# berekent de afstand tussen alle huizen en stopt deze in een lijst
+def distToAll(houseList):
+    distList = []
+    for i in range(len(houseList)):
+        for j in range(len(houseList)):
+            dist = houseList[i].minDistanceBetween(houseList[j])
+            if dist > 0:
+                distList.append(dist)
+    return distList
+
+# deze doet de magic uit eindelijk, wel nog alleen voor 20 huizen
+# haalt voor ieder huis de de korste afstand naar een volgend huis uit list
+def closestTo(distList):
+    for j in range(20):
+        print(len(distList))
+        x = distList[:(19)]
+        minimum = min(x)
+        print("vrijstand house", j, "=", minimum)
+        del x[:(19)]
+        del distList[:(19)]
+
+""" check hoeveel van welke huizen op de map staan, check de hoeveelheid vrijstand
+    per huis. herbereken de waardes van het huis en tel bij elkaar op.
+"""
+
+"""
     houseToComp = houseList[houseNum]
     houseList.remove(houseList[houseNum])
     min = houseToComp.distanceTo(houseList[-1])
+    print(min)
+    print(houseNum, "house19", houseList[-1])
     for i in range(len(houseList) - 1):
         x = houseToComp.distanceTo(houseList[i])
         if x < min:
@@ -96,6 +124,7 @@ def closestTo2(houseList, houseNum):
             min = x
     return min
 
+"""
 def checkOverlap(houseList):
     h1 = houseList[-1]
     for i in range(len(houseList) - 1):
@@ -117,6 +146,7 @@ def placeBungalow(list):
     bungalow = Bungalow(x,y)
     list.append(bungalow)
     return bungalow
+
 
 def placeSingle(list):
     x = random.randint(2, 152)
