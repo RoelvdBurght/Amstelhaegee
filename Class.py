@@ -81,13 +81,33 @@ def closestTo(houseList, houseNum):
 # berekent de afstand tussen alle huizen en stopt deze in een lijst
 def distToAll(houseList):
     distList = []
+    finalList = []
     for i in range(len(houseList)):
         for j in range(len(houseList)):
             dist = houseList[i].distanceTo(houseList[j])
             if dist > 0:
                 distList.append(dist)
-    return distList
+        finalList.append(min(distList))
+        distList = []
+    return finalList
 
+
+def valueOfMap(houseList):
+    value = 0
+    i = 0
+    freespace = distToAll(houseList)
+    for house in houseList:
+        free = freespace[i]
+        if house.freespace == 6:
+           value += calculateValue(house, free)
+        elif house.freespace == 3:
+            value += calculateValue(house, free)
+        elif house.freespace == 2:
+            value += calculateValue(house, free)
+        i += 1
+    return value
+
+"""
 # deze doet de magic uit eindelijk, wel nog alleen voor 20 huizen
 # haalt voor ieder huis de de korste afstand naar een volgend huis uit list
 def closestTo(distList, houseList):
@@ -95,9 +115,20 @@ def closestTo(distList, houseList):
     for j in range(length):
         x = distList[:length - 1]
         minimum = min(x)
+        freespace.append(minimum)
         print("vrijstand house", j, "=", minimum)
         del x[:(length -1)]
         del distList[:(length - 1)]
+    print(freespace)
+    return freespace
+"""
+def calculateValue(house, free):
+    houseVal = house.value
+    addedVal = house.percentage * floor(free - house.freespace)
+    houseValue = houseVal + addedVal
+    return houseVal
+
+
 
 """ check hoeveel van welke huizen op de map staan, check de hoeveelheid vrijstand
     per huis. herbereken de waardes van het huis en tel bij elkaar op.
