@@ -15,16 +15,16 @@ canvas.pack(expand=YES, fil=BOTH)
 def addSingle(x,y):
     width = scale(x)
     height = scale(y)
-    #canvas.create_rectangle(width - scale(2), height - scale(2), (width + scale(8)) + scale(2),
-    #                        (height + scale(8)) + scale(2), fill='black')
+    canvas.create_rectangle(width - scale(2), height - scale(2), (width + scale(8)) + scale(2),
+                            (height + scale(8)) + scale(2), fill='black')
     canvas.create_rectangle(width, height, (width + scale(8)), (height + scale(8)), fill='green')
 
 #draws 2 squares, first one is the free space, second is the bungalow
 def addBungalow(x,y):
     width = scale(x)
     height = scale(y)
-    #canvas.create_rectangle(width - scale(3), height - scale(3), (width + scale(10)) + scale(3),
-    #                       (height + scale(7.5)) + scale(3), fill='black')
+    canvas.create_rectangle(width - scale(3), height - scale(3), (width + scale(10)) + scale(3),
+                           (height + scale(7.5)) + scale(3), fill='black')
     canvas.create_rectangle(width, height, (width + scale(10)), (height + scale(7.5)), fill='purple')
 
 
@@ -32,13 +32,13 @@ def addBungalow(x,y):
 def addMaison(x, y):
     width = scale(x)
     height = scale(y)
-    #canvas.create_rectangle(width - scale(6), height - scale(6), (width + scale(11)) + scale(6),
-    #                        (height + scale(10.5)) + scale(6), fill='black')
+    canvas.create_rectangle(width - scale(6), height - scale(6), (width + scale(11)) + scale(6),
+                            (height + scale(10.5)) + scale(6), fill='black')
     canvas.create_rectangle(width, height, (width+scale(11)), (height+scale(10.5)), fill='red')
 
 # itereer over huizen
 def addNumber(i, list):
-    canvas.create_text(scale(list.x), scale(list.y), fill="black", font="Times 10 bold",text= i)
+    canvas.create_text(scale(list.x), scale(list.y), fill="white", font="Times 10 bold",text= i)
 
 
 
@@ -60,7 +60,16 @@ def addHouse(list):
 
 
 p = Class.makeMap(20)
-Class.closestTo(p, 0)
+Class.closestTo(Class.distToAll(p))
+
+# dit was om een begin te maken om waarde te berekenen
+for i in p:
+   print(type(i))
+   if type(i) == Class.Maison:
+       print("jes")
+
+#Class.closestTo(Class.distToAll(p))
+
 print(p)
 """
 for i in range(len(p) - 1):
