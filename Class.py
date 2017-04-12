@@ -1,9 +1,11 @@
 import math
 import random
+#random.seed(1234)
+
 
 class House:
     def distanceTo(self, other):
-        return distanceBetween(self, other)
+        return minDistanceBetween(self, other)
 
 class SingleHouse(House):
     def __init__(self, x, y):
@@ -54,6 +56,9 @@ def shortestPointPair(h1, h2):
             min = dist(l1[i], l2[i])
     return min
 
+def minDistanceBetween(h1,h2):
+    return min(distanceBetween(h1,h2), distanceBetween(h2,h1))
+
 def distanceBetween(h1, h2):
     if (h2.x >= h1.x and h2.x <= h1.x + h1.width) or (h2.x + h2.width >= h1.x and h2.x + h2.width <= h1.x + h1.width):
         if h2.y < h1.y:
@@ -68,9 +73,8 @@ def distanceBetween(h1, h2):
     else:
         return shortestPointPair(h1, h2)
 
-
-
 def closestTo(houseList, houseNum):
+    print (houseList[houseNum])
     houseToComp = houseList[houseNum]
     houseList.remove(houseList[houseNum])
     min = houseToComp.distanceTo(houseList[-1])
@@ -78,10 +82,19 @@ def closestTo(houseList, houseNum):
         x = houseToComp.distanceTo(houseList[i])
         if x < min:
             min = x
-            print("dist", min)
-            print("house", i)
     return min
 
+def closestTo2(houseList, houseNum):
+    print (houseList[houseNum])
+    print(houseList[houseNum].x, houseList[houseNum].y)
+    houseToComp = houseList[houseNum]
+    houseList.remove(houseList[houseNum])
+    min = houseToComp.distanceTo(houseList[-1])
+    for i in range(len(houseList) - 1):
+        x = houseToComp.distanceTo(houseList[i])
+        if x < min:
+            min = x
+    return min
 
 def checkOverlap(houseList):
     h1 = houseList[-1]
@@ -92,23 +105,22 @@ def checkOverlap(houseList):
     return False
 
 def placeMaison(list):
-    x = random.randint(0, 149)
-    y = random.randint(0, 149)
+    x = random.randint(6, 149)
+    y = random.randint(6, 169)
     maison = Maison(x,y)
     list.append(maison)
     return maison
 
 def placeBungalow(list):
-    x = random.randint(0, 150)
-    y = random.randint(0, 152)
+    x = random.randint(3, 150)
+    y = random.randint(3, 172)
     bungalow = Bungalow(x,y)
     list.append(bungalow)
     return bungalow
 
-
 def placeSingle(list):
-    x = random.randint(0, 152)
-    y = random.randint(0, 152)
+    x = random.randint(2, 152)
+    y = random.randint(2, 172)
     singleHouse = SingleHouse(x,y)
     list.append(singleHouse)
     return singleHouse

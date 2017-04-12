@@ -1,5 +1,5 @@
 from tkinter import *
-
+import tkinter
 import Class
 
 def scale(x):
@@ -36,11 +36,9 @@ def addMaison(x, y):
                             (height + scale(10.5)) + scale(6), fill='black')
     canvas.create_rectangle(width, height, (width+scale(11)), (height+scale(10.5)), fill='red')
 
-# itereer over huizen
+# voegt nummer toe aan huizen op canvas
 def addNumber(i, list):
     canvas.create_text(scale(list.x), scale(list.y), fill="white", font="Times 10 bold",text= i)
-
-
 
 # tieft die huizen op de canvas
 # input: lijst gemaakt door makeMap
@@ -79,5 +77,4 @@ for i in range(len(p) - 1):
 #for i in range(len(p)):
 """
 addHouse(p)
-
 mainloop()
