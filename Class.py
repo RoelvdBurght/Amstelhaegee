@@ -1,6 +1,6 @@
 import math
 import random
-random.seed(1234)
+#random.seed(1234)
 
 class House:
     def distanceTo(self, other):
@@ -126,9 +126,9 @@ def closestTo(distList, houseList):
 """
 def calculateValue(house, free):
     houseVal = house.value
-    addedVal = house.percentage * floor(free - house.freespace)
+    addedVal = (house.percentage * math.floor(free - house.freespace)) * houseVal
     houseValue = houseVal + addedVal
-    return houseVal
+    return houseValue
 
 
 

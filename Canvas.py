@@ -58,24 +58,7 @@ def addHouse(list):
 
 
 p = Class.makeMap(60)
-Class.closestTo(Class.distToAll(p,), p)
+print(Class.valueOfMap(p))
 
-# dit was om een begin te maken om waarde te berekenen
-
-for i in p:
-   print(type(i))
-   if type(i) == Class.Maison:
-       print("jes")
-
-#Class.closestTo(Class.distToAll(p))
-
-print(p)
-"""
-for i in range(len(p) - 1):
-    dist = []
-    dist.append(p[i].distanceTo(p[i+1]))
-    print("distance between house", i, 'and house', i + 1, "=", dist)
-#for i in range(len(p)):
-"""
 addHouse(p)
 mainloop()
