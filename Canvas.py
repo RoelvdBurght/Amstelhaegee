@@ -57,10 +57,11 @@ def addHouse(list):
             raise TypeError ("Item in list in not a House")
 
 
-p = Class.makeMap(20)
-Class.closestTo(Class.distToAll(p))
+p = Class.makeMap(60)
+Class.closestTo(Class.distToAll(p,), p)
 
 # dit was om een begin te maken om waarde te berekenen
+
 for i in p:
    print(type(i))
    if type(i) == Class.Maison:

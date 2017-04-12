@@ -56,6 +56,9 @@ def shortestPointPair(h1, h2):
             min = dist(l1[i], l2[i])
     return min
 
+def minDistanceBetween(h1, h2):
+    return min(distanceBetween(h1, h2), distanceBetween(h2, h1))
+
 def distanceBetween(h1, h2):
     if (h2.x >= h1.x and h2.x <= h1.x + h1.width) or (h2.x + h2.width >= h1.x and h2.x + h2.width <= h1.x + h1.width):
         if h2.y < h1.y:
@@ -80,21 +83,21 @@ def distToAll(houseList):
     distList = []
     for i in range(len(houseList)):
         for j in range(len(houseList)):
-            dist = houseList[i].minDistanceBetween(houseList[j])
+            dist = houseList[i].distanceTo(houseList[j])
             if dist > 0:
                 distList.append(dist)
     return distList
 
 # deze doet de magic uit eindelijk, wel nog alleen voor 20 huizen
 # haalt voor ieder huis de de korste afstand naar een volgend huis uit list
-def closestTo(distList):
-    for j in range(20):
-        print(len(distList))
-        x = distList[:(19)]
+def closestTo(distList, houseList):
+    length = len(houseList)
+    for j in range(length):
+        x = distList[:length - 1]
         minimum = min(x)
         print("vrijstand house", j, "=", minimum)
-        del x[:(19)]
-        del distList[:(19)]
+        del x[:(length -1)]
+        del distList[:(length - 1)]
 
 """ check hoeveel van welke huizen op de map staan, check de hoeveelheid vrijstand
     per huis. herbereken de waardes van het huis en tel bij elkaar op.
@@ -136,14 +139,14 @@ def checkOverlap(houseList):
 def placeMaison(list):
     x = random.randint(6, 149)
     y = random.randint(6, 169)
-    maison = Maison(x,y)
+    maison = Maison(x, y)
     list.append(maison)
     return maison
 
 def placeBungalow(list):
     x = random.randint(3, 150)
     y = random.randint(3, 172)
-    bungalow = Bungalow(x,y)
+    bungalow = Bungalow(x, y)
     list.append(bungalow)
     return bungalow
 
