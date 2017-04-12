@@ -1,7 +1,6 @@
 import math
 import random
-#random.seed(1234)
-
+random.seed(1234)
 
 class House:
     def distanceTo(self, other):
@@ -15,6 +14,7 @@ class SingleHouse(House):
         self.height = 8
         self.value = 285000
         self.freespace = 2
+        self.percentage = 0.03
 
 class Bungalow(House):
     def __init__(self, x, y):
@@ -24,6 +24,7 @@ class Bungalow(House):
         self.height = 7.5
         self.value = 399000
         self.freespace = 3
+        self.percentage = 0.04
 
 class Maison(House):
     def __init__(self, x, y):
@@ -33,6 +34,7 @@ class Maison(House):
         self.height = 10.5
         self.value = 610000
         self.freespace = 6
+        self.percentage = 0.06
 
 # Shape 1 is a square, shape 2 is a circle
 class Water:
