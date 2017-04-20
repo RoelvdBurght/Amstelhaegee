@@ -56,11 +56,11 @@ def addHouse(list):
             addMaison(list[i].x, list[i].y)
             addNumber(i, list[i])
         elif list[i].freespace == 0:
-            addWater(list[i].x, list[i].y, list[i].width, ist[i].height)
+            addWater(list[i].x, list[i].y, list[i].width, list[i].height)
         else:
             raise TypeError ("Item in list in not a House")
 
-
+#hello kas
 p = Class.makeMap(20)
 print(Class.valueOfMap(p))
 
