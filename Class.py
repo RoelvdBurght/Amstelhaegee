@@ -38,9 +38,12 @@ class Maison(House):
 
 # Shape 1 is a square, shape 2 is a circle
 class Water:
-    def __init__(self, x, y, shape):
+    def __init__(self, x, y, width, height, shape):
         self.x = x
         self.y = y
+        self.width = width
+        self.height = height
+        self.freespace = 0
         self.shape = shape
 
 # Berekend de afstand tussen twee punten. De input zijn twee lijsten met beiden twee ints.
@@ -75,9 +78,10 @@ def distanceBetween(h1, h2):
     else:
         return shortestPointPair(h1, h2)
 
-""" deze is niks
+"""
+deze is niks
 def closestTo(houseList, houseNum):
-    print (houseList[houseNum])
+ print (houseList[houseNum])
 """
 
 # berekent de afstand tussen alle huizen en stopt deze in een lijst
@@ -159,8 +163,8 @@ def closestTo2(houseList, houseNum):
         if x < min:
             min = x
     return min
-
 """
+
 def checkOverlap(houseList):
     h1 = houseList[-1]
     for i in range(len(houseList) - 1):
@@ -168,6 +172,16 @@ def checkOverlap(houseList):
         if h1.distanceTo(h2) < h1.freespace or h1.distanceTo(h2) < h2.freespace:
             return True
     return False
+
+def placeWater():
+    list = []
+    list.append(Water(17, 17, 38, 38, 1))
+    list.append(Water(105, 17, 38, 38, 1))
+    list.append(Water(17, 135, 38, 38, 1))
+    list.append(Water(105, 135, 38, 38, 1))
+    return list
+
+
 
 def placeMaison(list):
     x = random.randint(6, 149)
@@ -183,7 +197,6 @@ def placeBungalow(list):
     list.append(bungalow)
     return bungalow
 
-
 def placeSingle(list):
     x = random.randint(2, 152)
     y = random.randint(2, 172)
@@ -197,6 +210,7 @@ def makeMap(goal):
         numberOfBungalows = int(0.25*goal)
         numberOfSingles = int(0.6*goal)
         houseList = []
+
         while numberOfMaisons != 0:
             maison = placeMaison(houseList)
             if checkOverlap(houseList) == True:

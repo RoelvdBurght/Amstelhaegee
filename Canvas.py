@@ -57,7 +57,7 @@ def addHouse(list):
             raise TypeError ("Item in list in not a House")
 
 
-p = Class.makeMap(60)
+p = Class.makeMap(20)
 print(Class.valueOfMap(p))
 
 addHouse(p)
