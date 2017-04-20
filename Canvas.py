@@ -10,6 +10,8 @@ canvas.pack(expand=YES, fil=BOTH)
 
 #legend = Label(canvas, text='red = Maison | blue = Bungalow | green = single', fg='black', bg='white')
 #legend.pack()
+def addWater(x,y, width, height):
+    canvas.create_rectangle(scale(x), scale(y), scale(x) + scale(width), scale(y) + scale(height), fill='blue')
 
 #draws 2 squares, first one is the free space needed, second is the single
 def addSingle(x,y):
@@ -53,6 +55,8 @@ def addHouse(list):
         elif list[i].width == 11:
             addMaison(list[i].x, list[i].y)
             addNumber(i, list[i])
+        elif list[i].freespace == 0:
+            addWater(list[i].x, list[i].y, list[i].width, ist[i].height)
         else:
             raise TypeError ("Item in list in not a House")
 

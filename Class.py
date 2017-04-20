@@ -38,7 +38,7 @@ class Maison(House):
 
 # Shape 1 is a square, shape 2 is a circle
 class Water:
-    def __init__(self, x, y, shape):
+    def __init__(self, x, y, width, height, shape):
         self.x = x
         self.y = y
         self.shape = shape
@@ -161,32 +161,42 @@ def closestTo2(houseList, houseNum):
     return min
 
 """
-def checkOverlap(houseList):
+def inWater(houseList):
     h1 = houseList[-1]
-    for i in range(len(houseList) - 1):
+    for i in range(4):
+        water = houseList[i]
+        if h1.distanceTo(water) < 0:
+            return True
+    return False
+
+def checkOverlap(houseList):
+    if inWater(houseList):
+        return True
+    h1 = houseList[-1]
+    for i in range(4, (len(houseList) - 1)):
         h2 = houseList[i]
         if h1.distanceTo(h2) < h1.freespace or h1.distanceTo(h2) < h2.freespace:
             return True
     return False
 
 def placeMaison(list):
-    x = random.randint(6, 149)
-    y = random.randint(6, 169)
+    x = random.randint(6, 143)
+    y = random.randint(6, 163)
     maison = Maison(x, y)
     list.append(maison)
     return maison
 
 def placeBungalow(list):
-    x = random.randint(3, 150)
-    y = random.randint(3, 172)
+    x = random.randint(3, 147)
+    y = random.randint(3, 167)
     bungalow = Bungalow(x, y)
     list.append(bungalow)
     return bungalow
 
 
 def placeSingle(list):
-    x = random.randint(2, 152)
-    y = random.randint(2, 172)
+    x = random.randint(2, 150)
+    y = random.randint(2, 170)
     singleHouse = SingleHouse(x,y)
     list.append(singleHouse)
     return singleHouse
@@ -196,7 +206,7 @@ def makeMap(goal):
         numberOfMaisons = int(0.15*goal)
         numberOfBungalows = int(0.25*goal)
         numberOfSingles = int(0.6*goal)
-        houseList = []
+        houseList = placeWater()
         while numberOfMaisons != 0:
             maison = placeMaison(houseList)
             if checkOverlap(houseList) == True:
