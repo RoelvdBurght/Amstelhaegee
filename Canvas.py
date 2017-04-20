@@ -61,8 +61,13 @@ def addHouse(list):
             raise TypeError ("Item in list in not a House")
 
 #hello kas
-p = Class.makeMap(20)
-print(Class.valueOfMap(p))
+list = []
+for i in range(1000):
+    p = Class.makeMap(20)
+    list.append(Class.valueOfMap(p))
+maxi = max(list)
 
-addHouse(p)
-mainloop()
+print(maxi)
+
+#addHouse(p)
+#mainloop()
