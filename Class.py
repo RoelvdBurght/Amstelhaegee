@@ -37,7 +37,7 @@ class Maison(House):
         self.percentage = 0.06
 
 # Shape 1 is a square, shape 2 is a circle
-class Water:
+class Water(House):
     def __init__(self, x, y, width, height, shape):
         self.x = x
         self.y = y
@@ -186,13 +186,11 @@ def checkOverlap(houseList):
 
 def placeWater():
     list = []
-    list.append(Water(17, 17, 38, 38, 1))
-    list.append(Water(105, 17, 38, 38, 1))
-    list.append(Water(17, 135, 38, 38, 1))
-    list.append(Water(105, 135, 38, 38, 1))
+    list.append(Water(11, 11, 38, 38, 1))
+    list.append(Water(111, 11, 38, 38, 1))
+    list.append(Water(11, 131, 38, 38, 1))
+    list.append(Water(111, 131, 38, 38, 1))
     return list
-
-
 
 def placeMaison(list):
     x = random.randint(6, 143)
