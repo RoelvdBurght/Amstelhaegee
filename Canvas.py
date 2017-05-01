@@ -17,16 +17,16 @@ def addWater(x,y, width, height):
 def addSingle(x,y):
     width = scale(x)
     height = scale(y)
-    canvas.create_rectangle(width - scale(2), height - scale(2), (width + scale(8)) + scale(2),
-                            (height + scale(8)) + scale(2), fill='black')
+   # canvas.create_rectangle(width - scale(2), height - scale(2), (width + scale(8)) + scale(2),
+    #                        (height + scale(8)) + scale(2), fill='black')
     canvas.create_rectangle(width, height, (width + scale(8)), (height + scale(8)), fill='green')
 
 #draws 2 squares, first one is the free space, second is the bungalow
 def addBungalow(x,y):
     width = scale(x)
     height = scale(y)
-    canvas.create_rectangle(width - scale(3), height - scale(3), (width + scale(10)) + scale(3),
-                           (height + scale(7.5)) + scale(3), fill='black')
+   # canvas.create_rectangle(width - scale(3), height - scale(3), (width + scale(10)) + scale(3),
+    #                       (height + scale(7.5)) + scale(3), fill='black')
     canvas.create_rectangle(width, height, (width + scale(10)), (height + scale(7.5)), fill='purple')
 
 
@@ -34,8 +34,8 @@ def addBungalow(x,y):
 def addMaison(x, y):
     width = scale(x)
     height = scale(y)
-    canvas.create_rectangle(width - scale(6), height - scale(6), (width + scale(11)) + scale(6),
-                            (height + scale(10.5)) + scale(6), fill='black')
+    #canvas.create_rectangle(width - scale(6), height - scale(6), (width + scale(11)) + scale(6),
+     #                       (height + scale(10.5)) + scale(6), fill='black')
     canvas.create_rectangle(width, height, (width+scale(11)), (height+scale(10.5)), fill='red')
 
 # voegt nummer toe aan huizen op canvas
@@ -44,31 +44,36 @@ def addNumber(i, list):
 
 # tieft die huizen op de canvas
 # input: lijst gemaakt door makeMap
-
 def addHouse(list):
     for i in range(len(list)):
         if list[i].width == 8:
             addSingle(list[i].x, list[i].y)
-            addNumber(i, list[i])
+         #   addNumber(i, list[i])
         elif list[i].width == 10:
             addBungalow(list[i].x, list[i].y)
-            addNumber(i, list[i])
+          #  addNumber(i, list[i])
         elif list[i].width == 11:
             addMaison(list[i].x, list[i].y)
-            addNumber(i, list[i])
+           # addNumber(i, list[i])
         elif list[i].freespace == 0:
             addWater(list[i].x, list[i].y, list[i].width, list[i].height)
         else:
             raise TypeError ("Item in list in not a House")
 
-#hello kas
-list = []
-for i in range(100):
-    p = Class.makeMap(20)
-    list.append(Class.valueOfMap(p))
-maxi = max(list)
+max = 0
+max_map = None
+n = 100
+total = 0
 
-print(maxi)
+for i in range(n):
+    p = Class.makeMap2(20)
+    total += Class.valueOfMap(p)
+    print(i)
+    if Class.valueOfMap(p) > max:
+        max = Class.valueOfMap(p)
+        max_map = p
 
-addHouse(p)
+print(total/n)
+addHouse(max_map)
+print(max)
 mainloop()
