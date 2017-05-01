@@ -44,6 +44,7 @@ def addNumber(i, list):
 
 # tieft die huizen op de canvas
 # input: lijst gemaakt door makeMap
+
 def addHouse(list):
     for i in range(len(list)):
         if list[i].width == 8:
@@ -62,12 +63,12 @@ def addHouse(list):
 
 #hello kas
 list = []
-for i in range(1000):
+for i in range(100):
     p = Class.makeMap(20)
     list.append(Class.valueOfMap(p))
 maxi = max(list)
 
 print(maxi)
 
-#addHouse(p)
-#mainloop()
+addHouse(p)
+mainloop()

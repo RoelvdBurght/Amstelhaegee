@@ -101,6 +101,7 @@ def distToAll(houseList):
 def valueOfMap(houseList):
     value = 0
     i = 0
+    houseList
     freespace = distToAll(houseList)
     for house in houseList:
         free = freespace[i]
