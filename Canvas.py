@@ -67,7 +67,7 @@ def mapStats(trails):
     total = 0
     allValues = []
     for i in range(trails):
-        p = Class.makeMap(60,1)
+        p = Class.makeMap(20,1)
         value = Class.valueOfMap(p)
         total += value
         allValues.append(value)
@@ -76,4 +76,5 @@ def mapStats(trails):
             max_map = p
     return allValues,max_map
 
-mainloop()
+
+#mainloop()

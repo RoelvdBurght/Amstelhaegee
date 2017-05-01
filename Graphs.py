@@ -2,12 +2,16 @@ import matplotlib.pyplot as plt
 import Class
 import Canvas
 
-numbOfMaps = 40
+numbOfMaps = 20
 x = list(range(numbOfMaps))
 
 mapValues = Canvas.mapStats(numbOfMaps)[0]
-#plt.plot(range, mapValues)
-plt.xlabel("Number of Maps")
-plt.ylabel("Value of Map")
 
-#plt.show()
+data_to_plot = mapValues
+
+
+plt.boxplot(data_to_plot)
+plt.title("Boxplot of %i random sampled maps"%(numbOfMaps))
+
+plt.ylabel("Value of Map")
+plt.show()
