@@ -60,20 +60,19 @@ def addHouse(list):
         else:
             raise TypeError ("Item in list in not a House")
 
-max = 0
-max_map = None
-n = 100
-total = 0
+def mapStats(trails):
+    max = 0
+    max_map = None
+    total = 0
+    for i in range(trails):
+        p = Class.makeMap(40,2)
+        total += Class.valueOfMap(p)
+        if Class.valueOfMap(p) > max:
+            max = Class.valueOfMap(p)
+            max_map = p
+    print("Max:", max)
+    print("Mean:", total/trails)
+    addHouse(max_map)
 
-for i in range(n):
-    p = Class.makeMap2(20)
-    total += Class.valueOfMap(p)
-    print(i)
-    if Class.valueOfMap(p) > max:
-        max = Class.valueOfMap(p)
-        max_map = p
-
-print(total/n)
-addHouse(max_map)
-print(max)
+mapStats(1)
 mainloop()
