@@ -97,8 +97,8 @@ def distToAll(houseList):
         distList = []
     return finalList
 
-
 def valueOfMap(houseList):
+    houseList = houseList[4:]
     value = 0
     i = 0
     freespace = distToAll(houseList)
@@ -184,12 +184,20 @@ def checkOverlap(houseList):
             return True
     return False
 
-def placeWater():
+def placeWater1():
     list = []
     list.append(Water(11, 11, 38, 38, 1))
     list.append(Water(111, 11, 38, 38, 1))
     list.append(Water(11, 131, 38, 38, 1))
     list.append(Water(111, 131, 38, 38, 1))
+    return list
+
+def placeWater2():
+    list = []
+    list.append(Water(42,52,76,76,1))
+    list.append(Water(0,0,0,0,1))
+    list.append(Water(0,0,0,0,1))
+    list.append(Water(0,0,0,0,1))
     return list
 
 def placeMaison(list):
@@ -219,13 +227,45 @@ def makeMap(goal):
         numberOfMaisons = int(0.15*goal)
         numberOfBungalows = int(0.25*goal)
         numberOfSingles = int(0.6*goal)
-        houseList = placeWater()
+        houseList = placeWater1()
         while numberOfMaisons != 0:
             maison = placeMaison(houseList)
             if checkOverlap(houseList) == True:
                 houseList.remove(maison)
                 continue
             numberOfMaisons -= 1
+        while numberOfBungalows != 0:
+            bungalow = placeBungalow(houseList)
+            if checkOverlap(houseList) == True:
+                houseList.remove(bungalow)
+                continue
+            numberOfBungalows -= 1
+        while numberOfSingles != 0:
+            single = placeSingle(houseList)
+            if checkOverlap(houseList) == True:
+                houseList.remove(single)
+                continue
+            numberOfSingles -= 1
+        return houseList
+
+def makeMap2(goal):
+    while True:
+        numberOfMaisons = 2
+        numberOfBungalows = int(0.25*goal)
+        numberOfSingles = int(0.6*goal)
+        houseList = placeWater1()
+        houseList.append(Maison(0,0))
+        houseList.append(Maison(149, 169))
+        houseList.append(Maison(149,0))
+        """
+        houseList.append(Maison(0,169))
+        while numberOfMaisons != 0:
+            maison = placeMaison(houseList)
+            if checkOverlap(houseList) == True:
+                houseList.remove(maison)
+                continue
+            numberOfMaisons -= 1
+        """
         while numberOfBungalows != 0:
             bungalow = placeBungalow(houseList)
             if checkOverlap(houseList) == True:
