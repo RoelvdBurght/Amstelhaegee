@@ -1,6 +1,5 @@
 import math
 import random
-#random.seed(1234)
 
 class House:
     def distanceTo(self, other):
@@ -77,12 +76,6 @@ def distanceBetween(h1, h2):
             return h2.x - (h1.x + h1.width)
     else:
         return shortestPointPair(h1, h2)
-
-"""
-deze is niks
-def closestTo(houseList, houseNum):
- print (houseList[houseNum])
-"""
 
 # berekent de afstand tussen alle huizen en stopt deze in een lijst
 def distToAll(houseList):
@@ -223,50 +216,36 @@ def placeSingle(list):
     list.append(singleHouse)
     return singleHouse
 
-def makeMap(goal):
+def cornerMaisons(numberOfMaisons, houseList):
+    houseList.append(Maison(0, 0))
+    houseList.append(Maison(149, 169.5))
+    houseList.append(Maison(149, 0))
+    if numberOfMaisons == 3:
+        return 0
+    houseList.append(Maison(0, 169.5))
+    if numberOfMaisons == 6:
+        return 2
+    else:
+        return 5
+
+def makeMap(goal,waterTactic,corner=True):
     while True:
         numberOfMaisons = int(0.15*goal)
         numberOfBungalows = int(0.25*goal)
         numberOfSingles = int(0.6*goal)
-        houseList = placeWater1()
-        while numberOfMaisons != 0:
-            maison = placeMaison(houseList)
-            if checkOverlap(houseList) == True:
-                houseList.remove(maison)
-                continue
-            numberOfMaisons -= 1
-        while numberOfBungalows != 0:
-            bungalow = placeBungalow(houseList)
-            if checkOverlap(houseList) == True:
-                houseList.remove(bungalow)
-                continue
-            numberOfBungalows -= 1
-        while numberOfSingles != 0:
-            single = placeSingle(houseList)
-            if checkOverlap(houseList) == True:
-                houseList.remove(single)
-                continue
-            numberOfSingles -= 1
-        return houseList
+        if waterTactic == 1:
+            houseList = placeWater1()
+        elif waterTactic == 2:
+            houseList = placeWater2()
 
-def makeMap2(goal):
-    while True:
-        numberOfMaisons = 2
-        numberOfBungalows = int(0.25*goal)
-        numberOfSingles = int(0.6*goal)
-        houseList = placeWater1()
-        houseList.append(Maison(0,0))
-        houseList.append(Maison(149, 169))
-        houseList.append(Maison(149,0))
-        """
-        houseList.append(Maison(0,169))
+        if corner:
+            numberOfMaisons = cornerMaisons(numberOfMaisons, houseList)
         while numberOfMaisons != 0:
             maison = placeMaison(houseList)
             if checkOverlap(houseList) == True:
                 houseList.remove(maison)
                 continue
             numberOfMaisons -= 1
-        """
         while numberOfBungalows != 0:
             bungalow = placeBungalow(houseList)
             if checkOverlap(houseList) == True:
