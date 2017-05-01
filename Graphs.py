@@ -1,4 +1,13 @@
 import matplotlib.pyplot as plt
+import Class
+import Canvas
 
-plt.plot([1,2,3,4], [4,7,8,12])
-plt.show()
+numbOfMaps = 40
+x = list(range(numbOfMaps))
+
+mapValues = Canvas.mapStats(numbOfMaps)[0]
+#plt.plot(range, mapValues)
+plt.xlabel("Number of Maps")
+plt.ylabel("Value of Map")
+
+#plt.show()
