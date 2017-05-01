@@ -65,15 +65,15 @@ def mapStats(trails):
     max = 0
     max_map = None
     total = 0
+    allValues = []
     for i in range(trails):
-        p = Class.makeMap(40,2)
-        total += Class.valueOfMap(p)
+        p = Class.makeMap(60,1)
+        value = Class.valueOfMap(p)
+        total += value
+        allValues.append(value)
         if Class.valueOfMap(p) > max:
             max = Class.valueOfMap(p)
             max_map = p
-    print("Max:", max)
-    print("Mean:", total/trails)
-    addHouse(max_map)
+    return allValues,max_map
 
-mapStats(1)
 mainloop()

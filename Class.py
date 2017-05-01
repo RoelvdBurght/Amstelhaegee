@@ -228,8 +228,14 @@ def cornerMaisons(numberOfMaisons, houseList):
     else:
         return 5
 
-def makeMap(goal,waterTactic,corner=True):
+def makeMapRandomOrder(goal, waterTactic):
+
+# Eerste argument is het aantal te plaatsen huizen
+# Tweede argument is de plaatsing van het water. Mogelijkheden zijn 1 of 2.
+# Derde (optionele) argument bepaald of de maisons zoveel mogelijk in de hoek worden geplaatst.
+def makeMap(goal,waterTactic,corner=True, random=False):
     while True:
+        # Setup
         numberOfMaisons = int(0.15*goal)
         numberOfBungalows = int(0.25*goal)
         numberOfSingles = int(0.6*goal)
@@ -240,6 +246,9 @@ def makeMap(goal,waterTactic,corner=True):
 
         if corner:
             numberOfMaisons = cornerMaisons(numberOfMaisons, houseList)
+
+
+
         while numberOfMaisons != 0:
             maison = placeMaison(houseList)
             if checkOverlap(houseList) == True:
