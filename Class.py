@@ -94,7 +94,6 @@ def valueOfMap(houseList):
     houseList = houseList[4:]
     value = 0
     i = 0
-    houseList
     freespace = distToAll(houseList)
     for house in houseList:
         free = freespace[i]
@@ -228,14 +227,10 @@ def cornerMaisons(numberOfMaisons, houseList):
     else:
         return 5
 
-#def makeMapRandomOrder(goal, waterTactic):
-
 # Eerste argument is het aantal te plaatsen huizen
 # Tweede argument is de plaatsing van het water. Mogelijkheden zijn 1 of 2.
 # Derde (optionele) argument bepaald of de maisons zoveel mogelijk in de hoek worden geplaatst.
-
-def makeMap(goal,waterTactic,corner=True, random=False):
-
+def makeMap(goal,waterTactic,corner=True):
     while True:
         # Setup
         numberOfMaisons = int(0.15*goal)
@@ -249,8 +244,7 @@ def makeMap(goal,waterTactic,corner=True, random=False):
         if corner:
             numberOfMaisons = cornerMaisons(numberOfMaisons, houseList)
 
-
-
+        # Plaatsing huizen:
         while numberOfMaisons != 0:
             maison = placeMaison(houseList)
             if checkOverlap(houseList) == True:
@@ -270,3 +264,4 @@ def makeMap(goal,waterTactic,corner=True, random=False):
                 continue
             numberOfSingles -= 1
         return houseList
+

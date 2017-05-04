@@ -76,5 +76,4 @@ def mapStats(trails):
             max_map = p
     return allValues,max_map
 
-
-#mainloop()
+mainloop()
