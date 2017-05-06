@@ -1,5 +1,7 @@
 import math
 import random
+import copy
+
 
 class House:
     def distanceTo(self, other):
@@ -167,7 +169,6 @@ def inWater(houseList):
             return True
     return False
 
-
 def checkOverlap(houseList):
     if inWater(houseList):
         return True
@@ -176,6 +177,36 @@ def checkOverlap(houseList):
         h2 = houseList[i]
         if h1.distanceTo(h2) < h1.freespace or h1.distanceTo(h2) < h2.freespace:
             return True
+    return False
+
+def checkOverlapMap(houseList):
+    for i in range(len(houseList)):
+        print("lengte huislijst", len(houseList))
+        if checkOverlap(houseList[:i]):
+            print("overlap")
+            return True
+        if inWater(houseList[:i]):
+            return True
+    return False
+
+def overlapFinalBoss(houseList):
+    counter = 0
+    houseList = houseList[::-1]
+    for i in range(len(houseList)):
+        h1 = houseList[i]
+        houseList.pop(i)
+        for j in range(len(houseList)):
+            skip = False
+            counter += 1
+            h2 = houseList[j]
+            if h1.freespace == 0 or h2.freespace == 0:
+                skip = True
+                if h1.freespace == 0:
+                    if h1.distanceTo(h2) < 0:
+                        return True
+            if (h1.distanceTo(h2) < h1.freespace or h1.distanceTo(h2) < h2.freespace) and not skip:
+                return True
+        houseList.insert(i, h1)
     return False
 
 def placeWater1():
@@ -207,7 +238,6 @@ def placeBungalow(list):
     bungalow = Bungalow(x, y)
     list.append(bungalow)
     return bungalow
-
 
 def placeSingle(list):
     x = random.randint(2, 150)
@@ -270,3 +300,4 @@ def makeMap(goal,waterTactic,corner=True, random=False):
                 continue
             numberOfSingles -= 1
         return houseList
+
