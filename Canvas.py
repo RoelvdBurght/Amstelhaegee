@@ -1,6 +1,7 @@
 from tkinter import *
 import tkinter
 import Class
+import Hillclimber
 
 def scale(x):
     return x * 3
@@ -40,22 +41,28 @@ def addMaison(x, y):
 
 # voegt nummer toe aan huizen op canvas
 def addNumber(i, list):
-    canvas.create_text(scale(list.x), scale(list.y), fill="white", font="Times 10 bold",text= i)
+    canvas.create_text(scale(list.x), scale(list.y), fill="black", font="Times 10 bold",text= i)
+
+#zet het water vooraan in de lijst
+def sortList(houseList):
+    for i in range(len(houseList)):
+        if houseList[i].width == 0:
+            houseList.insert(0, houseList[i])
+    return houseList
 
 # tieft die huizen op de canvas
 # input: lijst gemaakt door makeMap
-
 def addHouse(list):
     for i in range(len(list)):
         if list[i].width == 8:
             addSingle(list[i].x, list[i].y)
-         #   addNumber(i, list[i])
+            addNumber(i, list[i])
         elif list[i].width == 10:
             addBungalow(list[i].x, list[i].y)
-          #  addNumber(i, list[i])
+            addNumber(i, list[i])
         elif list[i].width == 11:
             addMaison(list[i].x, list[i].y)
-           # addNumber(i, list[i])
+            addNumber(i, list[i])
         elif list[i].freespace == 0:
             addWater(list[i].x, list[i].y, list[i].width, list[i].height)
         else:
@@ -74,6 +81,46 @@ def mapStats(trails):
         if Class.valueOfMap(p) > max:
             max = Class.valueOfMap(p)
             max_map = p
+    print("initial map is done")
     return allValues,max_map
 
+""""
+Dit doet het nog niet
+"""
+def hillClimberMultiple(trails, map, goal, itNR, moveNR):
+    max = 0
+    max_map = NONE
+    for i in range(trails):
+        q = Hillclimber.verplaatser(map, goal, itNR, moveNR)
+        value = Class.valueOfMap(q)
+        if value > max:
+            max = value
+            max_map = q
+    return max_map
+
+
+
+valuelist, p = mapStats(25)
+print("Oude waarde =               ", Class.valueOfMap(p))
+map1 = Hillclimber.houseSwapper(p, 20, 500)
+print("Waarde na swappen =         ", Class.valueOfMap(map1))
+map2 = Hillclimber.verplaatser(map1, 20, 1000, 2)
+print("Waarde na verplaatsen =     ", Class.valueOfMap(map2))
+map3 = Hillclimber.houseSwapper(map2, 20, 500)
+print("Waarde na 2e X swappen =    ", Class.valueOfMap(map3))
+map4 = Hillclimber.verplaatser(map3, 20, 1000, 3)
+print("Waarde na 2e X verplaatsen= ", Class.valueOfMap(map4))
+map5 = Hillclimber.verplaatser(map4, 20, 1000, 5)
+print("Waarde na 3e X verplaatsen= ", Class.valueOfMap(map5))
+map6 = Hillclimber.verplaatser(map5, 20, 1000, 10)
+print("Waarde na 4e X verplaatsen= ", Class.valueOfMap(map6))
+map7 = Hillclimber.verplaatser(map6, 20, 1000, 15)
+print("Waarde na 5e X verplaatsen= ", Class.valueOfMap(map7))
+map8 = Hillclimber.verplaatser(map7, 20, 1000, 3)
+print("Waarde na 6e X verplaatsen= ", Class.valueOfMap(map8))
+map9 = Hillclimber.houseSwapper(map8, 20, 500)
+print("Waarde na laatse X swappen =", Class.valueOfMap(map9))
+
+
+addHouse(map9)
 mainloop()
