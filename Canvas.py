@@ -74,7 +74,5 @@ def mapStats(trails):
         if Class.valueOfMap(p) > max:
             max = Class.valueOfMap(p)
             max_map = p
-    return allValues,max_map
-
-
+    return allValues, max_map
 #mainloop()
