@@ -2,11 +2,7 @@ import matplotlib.pyplot as plt
 import Class
 import Canvas
 
-
-
-
 #plt.xlim(1, len(x))
-
 
 def boxPlot(runs):
     mapValues = Canvas.mapStats(runs)[0]
@@ -17,11 +13,9 @@ def boxPlot(runs):
     plt.boxplot(mapValues)
     plt.show()
 
-def lineGraph():
-  #  numOfIter = ...
-    mapValues = hillclimber.getListWithValus(x)
+def lineGraph(mapValues):
     plt.title("Graph of n iterations with Hilclimber")
     plt.ylabel("Value of Map")
     plt.xlabel("Number of Iterations")
-    plt.xlim(1, len(x))
-    plt.plot(list(x), mapValues)
+    plt.xlim(0, len(mapValues))
+    plt.plot(list(len(mapValues)), mapValues)

@@ -2,7 +2,6 @@ import math
 import random
 import copy
 
-
 class House:
     def distanceTo(self, other):
         return minDistanceBetween(self, other)
@@ -300,4 +299,3 @@ def makeMap(goal,waterTactic,corner=True, random=False):
                 continue
             numberOfSingles -= 1
         return houseList
-

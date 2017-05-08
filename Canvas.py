@@ -2,6 +2,7 @@ from tkinter import *
 import tkinter
 import Class
 import Hillclimber
+import Graphs
 
 def scale(x):
     return x * 3
@@ -82,7 +83,7 @@ def mapStats(trails):
             max = Class.valueOfMap(p)
             max_map = p
     print("initial map is done")
-    return allValues,max_map
+    return allValues, max_map
 
 """"
 Dit doet het nog niet
@@ -99,7 +100,7 @@ def hillClimberMultiple(trails, map, goal, itNR, moveNR):
     return max_map
 
 
-
+'''
 valuelist, p = mapStats(25)
 print("Oude waarde =               ", Class.valueOfMap(p))
 map1 = Hillclimber.houseSwapper(p, 20, 500)
@@ -120,7 +121,10 @@ map8 = Hillclimber.verplaatser(map7, 20, 1000, 3)
 print("Waarde na 6e X verplaatsen= ", Class.valueOfMap(map8))
 map9 = Hillclimber.houseSwapper(map8, 20, 500)
 print("Waarde na laatse X swappen =", Class.valueOfMap(map9))
-
-
-addHouse(map9)
-mainloop()
+'''
+p = mapStats(1)
+map = Hillclimber.verplaatser(p, 20, 10, 5)
+print(map)
+#Graph.lineGrap(map9)
+#addHouse(map9)
+#mainloop()

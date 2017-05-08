@@ -56,6 +56,7 @@ def checkHouseOutOfBounds(house, x, y):
     if (x - house.width) < 0 or (y - house.height) < 0 or (x + house.width) > 160 or (y + house.height) > 180:
         return True
     return False
+
 """
 Neemt als input: houseList = de lijst met huizen
                  goal      = het aantal huizen op de kaart
@@ -68,9 +69,12 @@ Deel 2 kiest nieuwe X en Y coördinaten door changeNum af en op te tellen bij de
 en binnen die range willekeurig iets te kiezen
 Deel 3 evalueert of er winst wordt gemaakt met de verandering, het huis buiten de kaart valt of er overlap is
 """
+
 def verplaatser(houseList, goal, itNR, changeNum):
     counter = 0
     winst = 0
+    mapValues = []
+
 #--------------------1-------------------------#
     for i in range(itNR):
         oldValue = Class.valueOfMap(houseList)
@@ -89,6 +93,7 @@ def verplaatser(houseList, goal, itNR, changeNum):
         newY = random.randint(round(lowerY), round(higherY))
 #--------------------3--------------------------#
         if not checkHouseOutOfBounds(houseList[house], newX, newY):
+            mapValues.append(Class.valueOfMap(houseList))
             houseList[house].x = newX
             houseList[house].y = newY
             if Class.valueOfMap(houseList) > oldValue and not Class.overlapFinalBoss(houseList):
@@ -99,4 +104,5 @@ def verplaatser(houseList, goal, itNR, changeNum):
                 houseList[house].y = oldY
     print("winst =", winst)
     print("NR verplaatsingen =", counter)
-    return houseList
+    return houseList, mapValues
+
