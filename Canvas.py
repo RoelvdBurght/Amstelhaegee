@@ -100,7 +100,6 @@ def hillClimberMultiple(trails, map, goal, itNR, moveNR):
     return max_map
 
 
-'''
 valuelist, p = mapStats(25)
 print("Oude waarde =               ", Class.valueOfMap(p))
 map1 = Hillclimber.houseSwapper(p, 20, 500)
@@ -123,8 +122,9 @@ map9 = Hillclimber.houseSwapper(map8, 20, 500)
 print("Waarde na laatse X swappen =", Class.valueOfMap(map9))
 '''
 p = mapStats(1)
-map = Hillclimber.verplaatser(p, 20, 10, 5)
+map = Hillclimber.verplaatser(p, 20, 10, 1)
 print(map)
 #Graph.lineGrap(map9)
 #addHouse(map9)
 #mainloop()
+'''
