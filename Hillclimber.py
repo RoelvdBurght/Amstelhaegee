@@ -71,6 +71,7 @@ Deel 3 evalueert of er winst wordt gemaakt met de verandering, het huis buiten d
 def verplaatser(houseList, goal, itNR, changeNum):
     counter = 0
     winst = 0
+    valueList = []
 #--------------------1-------------------------#
     for i in range(itNR):
         oldValue = Class.valueOfMap(houseList)
@@ -89,6 +90,7 @@ def verplaatser(houseList, goal, itNR, changeNum):
         newY = random.randint(round(lowerY), round(higherY))
 #--------------------3--------------------------#
         if not checkHouseOutOfBounds(houseList[house], newX, newY):
+            valueList.append(Class.valueOfMap(houseList))
             houseList[house].x = newX
             houseList[house].y = newY
             if Class.valueOfMap(houseList) > oldValue and not Class.overlapFinalBoss(houseList):
@@ -99,4 +101,4 @@ def verplaatser(houseList, goal, itNR, changeNum):
                 houseList[house].y = oldY
     print("winst =", winst)
     print("NR verplaatsingen =", counter)
-    return houseList
+    return houseList, valueList
