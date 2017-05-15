@@ -1,6 +1,6 @@
 import Class
 import random
-#random.seed(2)
+
 #krijgt een lijst binnen en swapt 2 huizen, houd geen rekening met overlap en dergelijke
 def swapHouses(list1, goal):
     if goal == 20:

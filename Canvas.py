@@ -7,6 +7,7 @@ import cProfile
 
 start_time = time.time()
 
+import Graphs
 
 def scale(x):
     return x * 3
@@ -79,7 +80,7 @@ def mapStats(trails):
     total = 0
     allValues = []
     for i in range(trails):
-        p = Class.makeMap(40,1)
+        p = Class.makeMap(20,1)
         value = Class.valueOfMap(p)
         total += value
         allValues.append(value)
@@ -103,16 +104,30 @@ def hillClimberMultiple(trails, map, goal, itNR, moveNR):
             max_map = q
     return max_map
 
-def startFunction():
-    q = Class.makeMap(40, 1)
-    z = Hillclimber.verplaatser(q, 40, 100, 3)
-    c = Hillclimber.houseSwapper(z, 40, 100)
 
 
-map = Class.makeMap(40, 1)
-distList = Class.initDistList(map)
-print(Class.valueOfMap(map))
-print(Class.valueOfMapFast(map, distList))
-addHouse(map)
+valuelist, p = mapStats(25)
+print("Oude waarde =               ", Class.valueOfMap(p))
+map1 = Hillclimber.houseSwapper(p, 20, 500)
+print("Waarde na swappen =         ", Class.valueOfMap(map1))
+map2 = Hillclimber.verplaatser(map1, 20, 1000, 2)
+print("Waarde na verplaatsen =     ", Class.valueOfMap(map2))
+map3 = Hillclimber.houseSwapper(map2, 20, 500)
+print("Waarde na 2e X swappen =    ", Class.valueOfMap(map3))
+map4 = Hillclimber.verplaatser(map3, 20, 1000, 3)
+print("Waarde na 2e X verplaatsen= ", Class.valueOfMap(map4))
+map5 = Hillclimber.verplaatser(map4, 20, 1000, 5)
+print("Waarde na 3e X verplaatsen= ", Class.valueOfMap(map5))
+map6 = Hillclimber.verplaatser(map5, 20, 1000, 10)
+print("Waarde na 4e X verplaatsen= ", Class.valueOfMap(map6))
+map7 = Hillclimber.verplaatser(map6, 20, 1000, 15)
+print("Waarde na 5e X verplaatsen= ", Class.valueOfMap(map7))
+map8 = Hillclimber.verplaatser(map7, 20, 1000, 3)
+print("Waarde na 6e X verplaatsen= ", Class.valueOfMap(map8))
+map9 = Hillclimber.houseSwapper(map8, 20, 500)
+print("Waarde na laatse X swappen =", Class.valueOfMap(map9))
+
+
+addHouse(map9)
 mainloop()
 #cProfile.run('startFunction()')

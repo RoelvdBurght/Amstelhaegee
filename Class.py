@@ -1,7 +1,6 @@
 import math
 import random
 import copy
-#random.seed(124)
 
 
 class House:
@@ -153,6 +152,36 @@ def calculateValue(house, free):
     return houseValue
 
 
+
+""" check hoeveel van welke huizen op de map staan, check de hoeveelheid vrijstand
+    per huis. herbereken de waardes van het huis en tel bij elkaar op.
+"""
+
+"""
+    houseToComp = houseList[houseNum]
+    houseList.remove(houseList[houseNum])
+    min = houseToComp.distanceTo(houseList[-1])
+    print(min)
+    print(houseNum, "house19", houseList[-1])
+    for i in range(len(houseList) - 1):
+        x = houseToComp.distanceTo(houseList[i])
+        if x < min:
+            min = x
+    return min
+
+def closestTo2(houseList, houseNum):
+    print (houseList[houseNum])
+    print(houseList[houseNum].x, houseList[houseNum].y)
+    houseToComp = houseList[houseNum]
+    houseList.remove(houseList[houseNum])
+    min = houseToComp.distanceTo(houseList[-1])
+    for i in range(len(houseList) - 1):
+        x = houseToComp.distanceTo(houseList[i])
+        if x < min:
+            min = x
+    return min
+
+"""
 def inWater(houseList):
     h1 = houseList[-1]
     for i in range(4):
@@ -262,8 +291,8 @@ def cornerMaisons(numberOfMaisons, houseList):
 # Eerste argument is het aantal te plaatsen huizen
 # Tweede argument is de plaatsing van het water. Mogelijkheden zijn 1 of 2.
 # Derde (optionele) argument bepaald of de maisons zoveel mogelijk in de hoek worden geplaatst.
-def makeMap(goal,waterTactic,corner=True, random=False):
 
+def makeMap(goal,waterTactic,corner=True):
     while True:
         # Setup
         numberOfMaisons = int(0.15*goal)
@@ -277,8 +306,7 @@ def makeMap(goal,waterTactic,corner=True, random=False):
         if corner:
             numberOfMaisons = cornerMaisons(numberOfMaisons, houseList)
 
-
-
+        # Plaatsing huizen:
         while numberOfMaisons != 0:
             maison = placeMaison(houseList)
             if checkOverlap(houseList) == True:
