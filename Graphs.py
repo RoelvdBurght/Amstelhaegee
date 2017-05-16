@@ -1,21 +1,39 @@
 import matplotlib.pyplot as plt
-import Class
 import Canvas
+import Hillclimber
+import plotly.plotly as py
+import plotly.tools as tls
+import plotly.graph_objs as go
+import numpy as np
 
-#plt.xlim(1, len(x))
-
-def boxPlot(runs):
-    mapValues = Canvas.mapStats(runs)[0]
+def boxPlot(data):
     #x = list(range(runs))
-    plt.title("Boxplot of %i random sampled maps" % (runs))
+    plt.title("Boxplot of 100 random sampled maps")
     plt.ylabel("Value of Map")
     #plt.yscale("log")
-    plt.boxplot(mapValues)
-    plt.show()
+    mpl_fig = plt.figure()
+    ax = mpl_fig.add_subplot(111)
+
+    ax.boxplot(data)
+
+    plotly_fig = tls.mpl_to_plotly(mpl_fig)
+    plot_url = py.plot(plotly_fig, 'mpl-multiple-boxplot')
+
+
 
 def lineGraph(mapValues):
-    plt.title("Graph of n iterations with Hilclimber")
-    plt.ylabel("Value of Map")
-    plt.xlabel("Number of Iterations")
+    trace = go.Scatter(
+        x=list(range((len(mapValues)))),
+        y=mapValues,
+        mode='lines',
+        name='lines'
+    )
+    data = [trace]
+
+    py.plot(data, filename='basic-line')
+
+    '''
     plt.xlim(0, len(mapValues))
-    plt.plot(list(len(mapValues)), mapValues)
+    plt.plot(range(len(mapValues)), mapValues)
+    plt.show()
+    '''

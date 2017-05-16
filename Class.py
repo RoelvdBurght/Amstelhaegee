@@ -1,7 +1,7 @@
 import math
 import random
 import copy
-
+random.seed(1)
 class House:
     def distanceTo(self, other):
         return minDistanceBetween(self, other)
@@ -91,11 +91,23 @@ def distToAll(houseList):
         distList = []
     return finalList
 
+def distForAll(houseList):
+    houseList = houseList[4:]
+    w , h = range(len(houseList)), range(len(houseList))
+    distList = [[0 for x in range(w)] for y in range(h)]
+    for x in range(len(distList)):
+        for y in range(len(distList)):
+            distance = houseList[x].distanceTo(houseList[y])
+            distList[x][y] = distance
+    return distList
+
+def valueOfMapFast(houseList, distList):
+
+
 def valueOfMap(houseList):
     houseList = houseList[4:]
     value = 0
     i = 0
-    houseList
     freespace = distToAll(houseList)
     for house in houseList:
         free = freespace[i]
@@ -107,6 +119,8 @@ def valueOfMap(houseList):
             value += calculateValue(house, free)
         i += 1
     return value
+
+
 
 """
 # deze doet de magic uit eindelijk, wel nog alleen voor 20 huizen
@@ -257,14 +271,10 @@ def cornerMaisons(numberOfMaisons, houseList):
     else:
         return 5
 
-#def makeMapRandomOrder(goal, waterTactic):
-
 # Eerste argument is het aantal te plaatsen huizen
 # Tweede argument is de plaatsing van het water. Mogelijkheden zijn 1 of 2.
 # Derde (optionele) argument bepaald of de maisons zoveel mogelijk in de hoek worden geplaatst.
-
-def makeMap(goal,waterTactic,corner=True, random=False):
-
+def makeMap(goal,waterTactic,corner=True):
     while True:
         # Setup
         numberOfMaisons = int(0.15*goal)
@@ -274,12 +284,9 @@ def makeMap(goal,waterTactic,corner=True, random=False):
             houseList = placeWater1()
         elif waterTactic == 2:
             houseList = placeWater2()
-
         if corner:
             numberOfMaisons = cornerMaisons(numberOfMaisons, houseList)
-
-
-
+        # Plaatsing huizen:
         while numberOfMaisons != 0:
             maison = placeMaison(houseList)
             if checkOverlap(houseList) == True:
