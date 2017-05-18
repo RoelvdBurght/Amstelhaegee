@@ -419,7 +419,7 @@ def makeMapConstraint(goal, waterTactic):
             bungalow = placeBungalow(houseList)
             if checkOverlap(houseList) == True:
                 houseList.remove(bungalow)
-                continue
+                continuex
             numberOfBungalows -= 1
         while numberOfSingles != 0:
             single = placeSingle(houseList)
