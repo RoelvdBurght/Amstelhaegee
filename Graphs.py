@@ -19,7 +19,7 @@ def boxPlot(runs):
 def lineGraph(mapValues):
   #  numOfIter = ...
 
-    plt.title("Graph of n iterations with Hilclimber")
+    plt.title("Graph of %i iterations with hillclimber" % (len(mapValues)))
     plt.ylabel("Value of Map")
     plt.xlabel("Number of Iterations")
     plt.xlim(0, len(mapValues))

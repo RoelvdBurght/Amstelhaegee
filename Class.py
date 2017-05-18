@@ -1,7 +1,8 @@
 import math
 import random
 import copy
-
+import numpy as np
+random.seed(1234)
 
 class House:
     def distanceTo(self, other):
@@ -61,6 +62,16 @@ def shortestPointPair(h1, h2):
         if dist(l1[i], l2[i]) < min:
             min = dist(l1[i], l2[i])
     return min
+
+def shortestPointPair2(h1, h2):
+    if h1.x > h2.x + h2.width and h1.y > h2.y + h2.height:
+        return dist([h1.x, h1.y],[h2.x + h2.width,h2.y + h2.height])
+    elif h1.x + h1.width < h2.x and h1.y > h2.y + h2.height:
+        return dist([h1.x + h1.width, h1.y], [h2.x, h2.y + h2.height])
+    elif h1.x + h1.width < h2.x and h1.y + h1.height < h2.y:
+        return dist([h1.x + h1.width, h1.y + h1.height], [h2.x, h2.y])
+    else:
+        return dist([h1.x, h1.y + h1.height], [h2.x + h2.width, h2.y])
 
 def minDistanceBetween(h1, h2):
     return min(distanceBetween(h1, h2), distanceBetween(h2, h1))
@@ -158,7 +169,6 @@ def closestTo2(houseList, houseNum):
         if x < min:
             min = x
     return min
-
 """
 def inWater(houseList):
     h1 = houseList[-1]
@@ -188,6 +198,24 @@ def checkOverlapMap(houseList):
             return True
     return False
 
+def inRange(h1, h2):
+    if abs(h1.x  - h2.x) < h1.freespace + h1.width:
+        return True
+    elif abs(h1.y - h2.y) < h1.freespace+ h1.height:
+        return True
+    return False
+
+def isMapInvalid(houseList):
+    if inWater(houseList):
+        return True
+    h1 = houseList[-1]
+    for i in range(4, (len(houseList) - 1)):
+        h2 = houseList[i]
+        if inRange(h1, h2):
+            if h1.distanceTo(h2) < h1.freespace or h1.distanceTo(h2) < h2.freespace:
+                return True
+    return False
+
 def overlapFinalBoss(houseList):
     counter = 0
     houseList = houseList[::-1]
@@ -198,14 +226,21 @@ def overlapFinalBoss(houseList):
             skip = False
             counter += 1
             h2 = houseList[j]
+            distance = h1.distanceTo(h2)
             if h1.freespace == 0 or h2.freespace == 0:
                 skip = True
                 if h1.freespace == 0:
-                    if h1.distanceTo(h2) < 0:
+                    if distance < 0:
                         return True
-            if (h1.distanceTo(h2) < h1.freespace or h1.distanceTo(h2) < h2.freespace) and not skip:
+            if distance < h1.freespace or distance < h2.freespace and not skip:
                 return True
         houseList.insert(i, h1)
+    return False
+
+def overlapFinalBoss2(houseList):
+    for i in range(4, (len(houseList))):
+        if isMapInvalid(houseList[:i]):
+            return True
     return False
 
 def placeWater1():
@@ -245,6 +280,7 @@ def placeSingle(list):
     list.append(singleHouse)
     return singleHouse
 
+# Plaatst maisons in de hoeken, returnd hoeveel maisons er hierna nog geplaatst moeten worden
 def cornerMaisons(numberOfMaisons, houseList):
     houseList.append(Maison(0, 0))
     houseList.append(Maison(149, 169.5))
@@ -277,19 +313,19 @@ def makeMap(goal,waterTactic,corner=True):
         # Plaatsing huizen:
         while numberOfMaisons != 0:
             maison = placeMaison(houseList)
-            if checkOverlap(houseList) == True:
+            if isMapInvalid(houseList) == True:
                 houseList.remove(maison)
                 continue
             numberOfMaisons -= 1
         while numberOfBungalows != 0:
             bungalow = placeBungalow(houseList)
-            if checkOverlap(houseList) == True:
+            if isMapInvalid(houseList) == True:
                 houseList.remove(bungalow)
                 continue
             numberOfBungalows -= 1
         while numberOfSingles != 0:
             single = placeSingle(houseList)
-            if checkOverlap(houseList) == True:
+            if isMapInvalid(houseList) == True:
                 houseList.remove(single)
                 continue
             numberOfSingles -= 1
