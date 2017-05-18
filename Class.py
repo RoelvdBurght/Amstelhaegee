@@ -91,18 +91,13 @@ def distToAll(houseList):
         distList = []
     return finalList
 
-def distForAll(houseList):
-    houseList = houseList[4:]
-    w , h = range(len(houseList)), range(len(houseList))
-    distList = [[0 for x in range(w)] for y in range(h)]
-    for x in range(len(distList)):
-        for y in range(len(distList)):
-            distance = houseList[x].distanceTo(houseList[y])
-            distList[x][y] = distance
-    return distList
-
-def valueOfMapFast(houseList, distList):
-
+def update_dist_list(houseList, dist_list, house):
+    new = []
+    change_list = dist_list[house]
+    for i in range(len(change_list)):
+        new.housList[house].distanceTo(houseList[i])
+    dist_list[house] = new
+    return dist_list
 
 def valueOfMap(houseList):
     houseList = houseList[4:]
@@ -120,8 +115,6 @@ def valueOfMap(houseList):
         i += 1
     return value
 
-
-
 """
 # deze doet de magic uit eindelijk, wel nog alleen voor 20 huizen
 # haalt voor ieder huis de de korste afstand naar een volgend huis uit list
@@ -137,6 +130,7 @@ def closestTo(distList, houseList):
     print(freespace)
     return freespace
 """
+
 def calculateValue(house, free):
     houseVal = house.value
     addedVal = (house.percentage * math.floor(free - house.freespace)) * houseVal
@@ -172,7 +166,6 @@ def closestTo2(houseList, houseNum):
         if x < min:
             min = x
     return min
-
 """
 def inWater(houseList):
     h1 = houseList[-1]
