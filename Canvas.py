@@ -2,7 +2,6 @@ from tkinter import *
 import tkinter
 import Class
 import Hillclimber
-import Graphs
 
 def scale(x):
     return x * 3
@@ -69,13 +68,14 @@ def addHouse(list):
         else:
             raise TypeError ("Item in list in not a House")
 
-def mapStats(trails):
+# maakt map returnt en lijst met alle waardes en de map met hoogste waarde
+def mapStats(trails, waterTact, maisonTact):
     max = 0
     max_map = None
     total = 0
     allValues = []
     for i in range(trails):
-        p = Class.makeMap(20,1)
+        p = Class.makeMap(40,waterTact, maisonTact)
         value = Class.valueOfMap(p)
         total += value
         allValues.append(value)
@@ -98,26 +98,3 @@ def hillClimberMultiple(trails, map, goal, itNR, moveNR):
             max = value
             max_map = q
     return max_map
-
-valuelist, p = mapStats(23)
-print("Oude waarde =               ", Class.valueOfMap(p))
-map1 = Hillclimber.houseSwapper(p, 20, 500)
-print("Waarde na swappen =         ", Class.valueOfMap(map1))
-map2 = Hillclimber.verplaatser(map1, 20, 1000, 2)[0]
-print("Waarde na verplaatsen =     ", Class.valueOfMap(map2))
-map3 = Hillclimber.houseSwapper(map2, 20, 500)
-print("Waarde na 2e X swappen =    ", Class.valueOfMap(map3))
-map4 = Hillclimber.verplaatser(map3, 20, 1000, 3)[0]
-print("Waarde na 2e X verplaatsen= ", Class.valueOfMap(map4))
-map5 = Hillclimber.verplaatser(map4, 20, 1000, 5)[0]
-print("Waarde na 3e X verplaatsen= ", Class.valueOfMap(map5))
-map6 = Hillclimber.verplaatser(map5, 20, 1000, 10)[0]
-print("Waarde na 4e X verplaatsen= ", Class.valueOfMap(map6))
-map7 = Hillclimber.verplaatser(map6, 20, 1000, 15)[0]
-print("Waarde na 5e X verplaatsen= ", Class.valueOfMap(map7))
-map8 = Hillclimber.verplaatser(map7, 20, 1000, 3)[0]
-print("Waarde na 6e X verplaatsen= ", Class.valueOfMap(map8))
-map9 = Hillclimber.houseSwapper(map8, 20, 500)
-print("Waarde na laatse X swappen =", Class.valueOfMap(map9))
-addHouse(map9)
-mainloop()
