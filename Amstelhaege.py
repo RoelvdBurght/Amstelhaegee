@@ -1,5 +1,5 @@
-#import Class
 from tkinter import *
+import tkinter
 import Class
 import Canvas
 import Hillclimber
