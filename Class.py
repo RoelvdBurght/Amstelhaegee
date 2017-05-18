@@ -69,7 +69,7 @@ def initDistList(houseList):
                     print(distanceBetween(houseList[i],houseList[j]))
                     print(houseList[i])
                     print(houseList[j])
-                distList[i][j] = distanceBetween(houseList[i],houseList[j])
+                distList[i][j] = round(distanceBetween(houseList[i],houseList[j]))
     return distList
 
 # Berekend de afstand tussen twee punten. De input zijn twee lijsten met beiden twee ints.
@@ -425,5 +425,5 @@ def makeMapConstraint(goal, waterTactic):
             numberOfSingles -= 1
         return houseList
 
-def updateDistList(distList, house, houseMoved, newX, newY):
-    print(joe)
+def updateDistList(map, distList, house, houseMoved, newX, newY):
+    print('joe')
