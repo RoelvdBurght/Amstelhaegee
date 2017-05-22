@@ -150,6 +150,17 @@ def update_dist_list(houseList, dist_list, house):
             continue
         new.append(houseList[house].distanceTo(houseList[i]))
     dist_list[house] = new
+def update_dist_list(houseList, dist_list, houseIndex):
+    new = [0,0,0,0]
+    change_list = dist_list[houseIndex]
+    listlen = len(change_list)
+    for i in range(4, listlen):
+        if i == houseIndex:
+            new.append(0)
+        else:
+            new.append(houseList[houseIndex].distanceTo(houseList[i]))
+    dist_list[houseIndex] = new
+    #print(dist_list)
     return dist_list
 
 def valueOfMapFast(houseList, freespaceList):
@@ -269,13 +280,12 @@ def overlapFinalBoss(houseList):
             skip = False
             counter += 1
             h2 = houseList[j]
-            distance = h1.distanceTo(h2)
             if h1.freespace == 0 or h2.freespace == 0:
                 skip = True
                 if h1.freespace == 0:
-                    if distance < 0:
+                    if h1.distanceTo(h2) < 0:
                         return True
-            if (distance < h1.freespace or distance < h2.freespace) and not skip:
+            if (h1.distanceTo(h2) < h1.freespace or h1.distanceTo(h2) < h2.freespace) and not skip:
                 return True
         houseList.insert(i, h1)
     return False
