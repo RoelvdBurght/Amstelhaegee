@@ -85,14 +85,3 @@ def mapStats(trails, waterTact, maisonTact):
     print("initial map is done")
     return allValues,max_map
 
-map = Class.makeMap(40, 1)
-print(Class.valueOfMap(map))
-distList = Class.initDistList(map)
-print(Class.valueOfMapFast(map, distList))
-new = Class.update_dist_list(map, distList, 5)
-print(Class.valueOfMapFast(map, new))
-
-#q = Hillclimber.verplaatser2(map, 40, 100, 1)
-#addHouse(q)
-mainloop()
-#cProfile.run('start#Function()

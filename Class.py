@@ -2,7 +2,7 @@ import math
 import random
 import copy
 import numpy as np
-#random.seed(1234)
+random.seed(1234)
 
 class House:
     def distanceTo(self, other):
@@ -48,33 +48,6 @@ class Water(House):
         self.freespace = 0
         self.shape = shape
 
-def initDistList2(houseList):
-    length = len(houseList)-4
-    distList = [[0 for x in range(length)] for y in range(length)]
-    for i in range(length):
-        for j in range(length):
-            #isWater = False
-            #if houseList[i].freespace == 0:
-                #isWater = True
-                #distList[i][j] = "w"
-            #if houseList[j].freespace == 0:
-            #    isWater = True
-            sameHouse = False
-            if i == j:
-                sameHouse = True
-                distList[i][j] = 0
-            if not isWater and not sameHouse:
-                if distanceBetween(houseList[i],houseList[j]) == 0.5:
-                    print(distanceBetween(houseList[i],houseList[j]))
-                    print(houseList[i])
-                    print(houseList[j])
-                distList[i][j] = distanceBetween(houseList[i],houseList[j])
-    test = []
-    for list in distList[4:]:
-        test.append(min(x for x in list if x > 0))
-    print(test)
-    return distList
-
 # Berekend de afstand tussen twee punten. De input zijn twee lijsten met beiden twee ints.
 def dist(point1, point2):
     height = point1[0] - point2[0]
@@ -117,6 +90,7 @@ def distanceBetween(h1, h2):
     else:
         return shortestPointPair(h1, h2)
 
+# calculates the distance from from all houses to all houses
 def initDistList(houseList):
     houseList = houseList[4:]
     length = len(houseList)
@@ -132,37 +106,14 @@ def initDistList(houseList):
         distList.append(all_dist_from_i)
     return distList
 
+# calculate freespace from a house out of the distlist
 def freespaceFromDistList(distList):
     freespace = []
     for list in distList:
-        freespace.append(min(list))
+        freespace.append(min(x for x in list if x > 0))
     return freespace
 
-def update_dist_list(houseList, dist_list, house):
-    house -= 4
-    new = []
-    houseList = houseList[4:]
-    change_list = dist_list[house]
-    # print('he', change_list)
-    for i in range(len(change_list)):
-        if i == house:
-            new.append(200)
-            continue
-        new.append(houseList[house].distanceTo(houseList[i]))
-    dist_list[house] = new
-def update_dist_list(houseList, dist_list, houseIndex):
-    new = [0,0,0,0]
-    change_list = dist_list[houseIndex]
-    listlen = len(change_list)
-    for i in range(4, listlen):
-        if i == houseIndex:
-            new.append(0)
-        else:
-            new.append(houseList[houseIndex].distanceTo(houseList[i]))
-    dist_list[houseIndex] = new
-    #print(dist_list)
-    return dist_list
-
+# calculates value of map with a freespace list
 def valueOfMapFast(houseList, freespaceList):
     houseList = houseList[4:]
     mapTotal = 0
@@ -170,31 +121,26 @@ def valueOfMapFast(houseList, freespaceList):
         mapTotal += calculateValue(houseList[i], freespaceList[i])
     return mapTotal
 
+# updates the distances from the moved house to other all other houses
+def update_dist_list(houseList, dist_list, houseIndex):
+    new = []
+    change_list = dist_list[houseIndex]
+    for i in range(len(change_list)):
+        if i == houseIndex:
+            new.append(0)
+        else:
+            distance = houseList[houseIndex].distanceTo(houseList[i])
+            new.append(distance)
+            dist_list[i][houseIndex] = distance
+    dist_list[houseIndex] = new
+    return dist_list
 
-def valueOfMap(houseList):
-    houseList = houseList[4:]
-    value = 0
-    i = 0
-    freespace = distToAll(houseList)
-    for house in houseList:
-        free = freespace[i]
-        if house.freespace == 6:
-           value += calculateValue(house, free)
-        elif house.freespace == 3:
-            value += calculateValue(house, free)
-        elif house.freespace == 2:
-            value += calculateValue(house, free)
-        i += 1
-    return value
-
-
+# calculates the value of a house
 def calculateValue(house, free):
     houseVal = house.value
     addedVal = (house.percentage * math.floor(free - house.freespace)) * houseVal
     houseValue = houseVal + addedVal
     return houseValue
-
-
 
 """ check hoeveel van welke huizen op de map staan, check de hoeveelheid vrijstand
     per huis. herbereken de waardes van het huis en tel bij elkaar op.
