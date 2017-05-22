@@ -1,5 +1,6 @@
 import Class
 import random
+import numpy as np
 
 #krijgt een lijst binnen en swapt 2 huizen, houd geen rekening met overlap en dergelijke
 def swapHouses(list1, goal):
@@ -54,7 +55,7 @@ def houseSwapper(houseList, goal, itNR):
 #Checkt of de coördinaten x en y voor een bepaald type huis buiten de kaart vallen
 #Neemt als input een huis object en 2 nieuwe coördinaten
 def checkHouseOutOfBounds(house, x, y):
-    if (x - house.width) < 0 or (y - house.height) < 0 or (x + house.width) > 160 or (y + house.height) > 180:
+    if (x - house.width - house.freespace) < 0 or (y - house.height - house.freespace) < 0 or (x + house.width+house.freespace) > 160 or (y + house.height+house.freespace) > 180:
         return True
     return False
 
@@ -97,7 +98,106 @@ def verplaatser(houseList, goal, itNR, changeNum):
             newValue = Class.valueOfMapFast(houseList, distList)
             # newValue = Class.valueOfMap(houseList)
             if newValue > oldValue and not Class.overlapFinalBoss(houseList):
+                print("joe")
                 winst += newValue - oldValue
+                counter += 1
+            else:
+                houseList[house].x = oldX
+                houseList[house].y = oldY
+    print("winst =", winst)
+    print("NR verplaatsingen =", counter)
+    return houseList
+
+def accept(i, itNR, verbetering, cS):
+    if verbetering > 0:
+        print("true")
+        return True
+    if cS == "lin":
+        print("true")
+        t0 = 100000
+        tn = 1
+        n = itNR
+        temp = t0 - (i(t0-tn)/n)
+    acceptBound= random.randint(0,1)
+    if temp > acceptBound:
+        print("true")
+        return True
+    return False
+
+
+def simAn(houseList, goal, itNR, changeNum, cS):
+    counter = 0
+    winst = 0
+    distList = Class.initDistList(houseList)
+    # --------------------1-------------------------#
+    for i in range(itNR):
+        oldValue = Class.valueOfMap(houseList)
+        #oldValue = Class.valueOfMapFast(houseList, distList)
+        if goal == 20:
+            house = random.randint(3, 20)
+        elif goal == 40:
+            house = random.randint(4, 40)
+        elif goal == 60:
+            house = random.randint(4, 60)
+            # --------------------2--------------------------#
+        oldX = houseList[house].x
+        oldY = houseList[house].y
+        lowerX, higherX = (oldX - changeNum), (oldX + changeNum)
+        lowerY, higherY = (oldY - changeNum), (oldY + changeNum)
+        newX = random.randint(round(lowerX), round(higherX))
+        newY = random.randint(round(lowerY), round(higherY))
+        # --------------------3--------------------------#
+        if not checkHouseOutOfBounds(houseList[house], newX, newY):
+            houseList[house].x = newX
+            houseList[house].y = newY
+            #newValue = Class.valueOfMapFast(houseList, distList)
+            newValue = Class.valueOfMap(houseList)
+            verbetering = newValue - oldValue
+            if not Class.overlapFinalBoss(houseList):
+                if accept(i, itNR, verbetering, cS):
+                    counter += 1
+                    winst += newValue - oldValue
+            else:
+                houseList[house].x = oldX
+                houseList[house].y = oldY
+    print("winst =", winst)
+    print("NR verplaatsingen =", counter)
+    return houseList
+
+def verplaatser2(houseList, goal, itNR, changeNum):
+    counter = 0
+    winst = 0
+  #--------------------1-------------------------#
+    for i in range(itNR):
+        distList = Class.initDistList(houseList)
+        value = Class.valueOfMapFast(houseList, distList)
+        #distList = Class.initDistList(houseList)
+        #oldValue = Class.valueOfMapFast(houseList, distList)
+        if goal == 20:
+            house = random.randint(3, 20)
+        elif goal == 40:
+            house = random.randint(4, 40)
+        elif goal == 60:
+            house = random.randint(4, 60)
+ #--------------------2--------------------------#
+        oldX = houseList[house].x
+        oldY = houseList[house].y
+        lowerX, higherX = (oldX - changeNum), (oldX + changeNum)
+        lowerY, higherY = (oldY - changeNum), (oldY + changeNum)
+        newX = random.randint(round(lowerX), round(higherX))
+        newY = random.randint(round(lowerY), round(higherY))
+ #--------------------3--------------------------#
+        if not checkHouseOutOfBounds(houseList[house], newX, newY):
+            houseList[house].x = newX
+            houseList[house].y = newY
+            newDistList = Class.update_dist_list(houseList, distList, house)
+            #newValue = Class.valueOfMapFast(houseList, newDistList)
+            newValue = Class.valueOfMap(houseList)
+            if newValue > value and not Class.overlapFinalBoss(houseList):
+                print(value, "old")
+                print(newValue, "new")
+                value = newValue
+                winst += newValue - value
                 counter += 1
             else:
                 houseList[house].x = oldX
