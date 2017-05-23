@@ -215,9 +215,7 @@ def mapFinalCheck(houseList, distList):
         i = 4
         for value in list:
             if houseList[i].freespace > value and value > 0:
-                print("value", value)
-                print(houseList[i])
-                print("index", i)
+                print("INVALID MAP")
             i+=1
 
 def overlapFinalBoss(houseList):

@@ -3,19 +3,13 @@ import tkinter
 import Class
 import Canvas
 import Hillclimber
+import SimulatedAnnealing
 import Graphs
 import random
 import time
-random.seed(123)
 
-start = time.time()
-# depthFirstSearch(trails, goal, waterTact, maisonTact)
-# verplaatser(map, goal, iterations, change_pixel, maisonTact)
-values, p = Class.depthFirstSearch(500, 40, 1, 0)
-distlist = Class.initDistList(p)
-Class.mapFinalCheck(p,distlist)
-print(time.time() - start)
-Canvas.addHouse(p)
+p = Class.makeMap(20, 1, True)
+graph, climbed = SimulatedAnnealing.SA(SimulatedAnnealing.exponentialCooling,p, 20, 1000, 1, 1)
+print(graph)
+Canvas.addHouse(climbed)
 mainloop()
-# climbed = Hillclimber.verplaatser(p, 40, 500, 1, 0)
-
