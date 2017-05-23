@@ -2,6 +2,7 @@ import math
 import random
 import copy
 import numpy as np
+#random.seed(1)
 
 class House:
     def distanceTo(self, other):
@@ -47,6 +48,50 @@ class Water(House):
         self.freespace = 0
         self.shape = shape
 
+# calculates the distance from from all houses to all houses
+def initDistList(houseList):
+    houseList = houseList[4:]
+    length = len(houseList)
+    distList = []
+    for i in range(length):
+        all_dist_from_i = []
+        for j in range(length):
+            if i == j:
+                all_dist_from_i.append(0)
+                continue
+            distance = houseList[i].distanceTo(houseList[j])
+            all_dist_from_i.append(distance)
+        distList.append(all_dist_from_i)
+    return distList
+
+# calculate freespace from a house out of the distlist
+def freespaceFromDistList(distList):
+    freespace = []
+    for list in distList:
+        freespace.append(min(x for x in list if x > 0))
+    return freespace
+
+# calculates value of map with a freespace list
+def valueOfMapFast(houseList, freespaceList):
+    mapTotal = 0
+    for i in range(len(houseList) - 4):
+        mapTotal += calculateValue(houseList[i + 4], freespaceList[i])
+    return mapTotal
+
+# updates the distances from the moved house to other all other houses
+def update_dist_list(houseList, dist_list, houseIndex):
+    new = []
+    change_list = dist_list[houseIndex]
+    for i in range(len(change_list)):
+        if i == houseIndex:
+            new.append(0)
+        else:
+            distance = houseList[houseIndex + 4].distanceTo(houseList[i + 4])
+            new.append(distance)
+            dist_list[i][houseIndex] = distance
+    dist_list[houseIndex] = new
+    return dist_list
+
 # Berekend de afstand tussen twee punten. De input zijn twee lijsten met beiden twee ints.
 def dist(point1, point2):
     height = point1[0] - point2[0]
@@ -72,7 +117,7 @@ def shortestPointPair2(h1, h2):
     else:
         return dist([h1.x, h1.y + h1.height], [h2.x + h2.width, h2.y])
 
-def minDistanceBetween2(h1, h2):
+def minDistanceBetween(h1, h2):
     return min(distanceBetween(h1, h2), distanceBetween(h2, h1))
 
 def distanceBetween(h1, h2):
@@ -89,61 +134,28 @@ def distanceBetween(h1, h2):
     else:
         return shortestPointPair(h1, h2)
 
-# CODE VAN STACK OVERFLOW!!!!
-def minDistanceBetween(h1, h2):
-    left = h2.x + h2.width < h1.x
-    right = h1.x + h1.width < h2.x
-    bottom = h2.y + h2.height < h1.y
-    top = h1.y + h1.height < h2.y
-    if top and left:
-        return dist([h1.x, h1.y + h1.height], [h2.x + h2.width, h2.y])
-    elif left and bottom:
-        return dist([h1.x, h1.y],[h2.x + h2.width, h2.y + h2.height])
-    elif bottom and right:
-        return dist([h1.x + h1.width, h1.y], [h2.x, h2.y + h2.height])
-    elif right and top:
-        return dist([h1.x + h1.width, h1.y + h1.height], [h2.x, h2.y])
-    elif left:
-        return h1.x - (h2.x + h2.width)
-    elif right:
-        return h2.x - (h1.x + h1.width)
-    elif bottom:
-        return h1.y - (h2.y + h2.height)
-    else:
-        return h2.y - (h1.y + h1.height)
-
-# calculates the distance from from all houses to all houses
-def initDistList(houseList):
-    houseList = houseList[4:]
-    length = len(houseList)
+# berekent de afstand tussen alle huizen en stopt deze in een lijst
+def distToAll(houseList):
     distList = []
-    for i in range(length):
-        all_dist_from_i = []
-        for j in range(length):
-            if i == j:
-                all_dist_from_i.append(0)
-                continue
-            distance = houseList[i].distanceTo(houseList[j])
-            all_dist_from_i.append(distance)
-        distList.append(all_dist_from_i)
-    return distList
+    finalList = []
+    for i in range(len(houseList)):
+        for j in range(len(houseList)):
+            dist = houseList[i].distanceTo(houseList[j])
+            if dist > 0:
+                distList.append(dist)
+        finalList.append(min(distList))
+        distList = []
+    return finalList
 
-# calculate freespace from a house out of the distlist
-def freespaceFromDistList(distList):
-    freespace = []
-    for list in distList:
-        freespace.append(min(x for x in list if x > 0))
-    return freespace
-
-# calculates value of map with a freespace list
 def valueOfMapFast(houseList, distList):
-    freespaceList = freespaceFromDistList(distList)
+    freespace = ['w','w','w','w']
+    length = len(houseList)
+    freespace.extend([min(x for x in distList[index] if x > 0) for index in range(4, length)])
     mapTotal = 0
-    for i in range(len(houseList) - 4):
-        mapTotal += calculateValue(houseList[i + 4], freespaceList[i])
+    for i in range(4, length):
+        mapTotal += calculateValue(houseList[i], freespace[i])
     return mapTotal
 
-# updates the distances from the moved house to other all other houses
 def update_dist_list(houseList, dist_list, houseIndex):
     new = []
     change_list = dist_list[houseIndex]
@@ -151,19 +163,77 @@ def update_dist_list(houseList, dist_list, houseIndex):
         if i == houseIndex:
             new.append(0)
         else:
-            distance = houseList[houseIndex + 4].distanceTo(houseList[i + 4])
+            distance = houseList[houseIndex].distanceTo(houseList[i])
             new.append(distance)
             dist_list[i][houseIndex] = distance
     dist_list[houseIndex] = new
+    #print(dist_list)
     return dist_list
 
-# calculates the value of a house
+def updateDistList(houseList, distList, house):
+    checkList = distList[house]
+    for i in range(len(checkList)):
+        if i == house:
+            distList[house][i] = 0
+        else:
+            length = houseList[house].distanceTo(houseList[i])
+            distList[house][i] = length
+            distList[i][house] = length
+    return distList
+
+def valueOfMap(houseList):
+    houseList = houseList[4:]
+    value = 0
+    i = 0
+    freespace = distToAll(houseList)
+    for house in houseList:
+        free = freespace[i]
+        if house.freespace == 6:
+           value += calculateValue(house, free)
+        elif house.freespace == 3:
+            value += calculateValue(house, free)
+        elif house.freespace == 2:
+            value += calculateValue(house, free)
+        i += 1
+    return value
+
+
 def calculateValue(house, free):
     houseVal = house.value
     addedVal = (house.percentage * math.floor(free - house.freespace)) * houseVal
     houseValue = houseVal + addedVal
     return houseValue
 
+
+
+""" check hoeveel van welke huizen op de map staan, check de hoeveelheid vrijstand
+    per huis. herbereken de waardes van het huis en tel bij elkaar op.
+"""
+
+"""
+    houseToComp = houseList[houseNum]
+    houseList.remove(houseList[houseNum])
+    min = houseToComp.distanceTo(houseList[-1])
+    print(min)
+    print(houseNum, "house19", houseList[-1])
+    for i in range(len(houseList) - 1):
+        x = houseToComp.distanceTo(houseList[i])
+        if x < min:
+            min = x
+    return min
+
+def closestTo2(houseList, houseNum):
+    print (houseList[houseNum])
+    print(houseList[houseNum].x, houseList[houseNum].y)
+    houseToComp = houseList[houseNum]
+    houseList.remove(houseList[houseNum])
+    min = houseToComp.distanceTo(houseList[-1])
+    for i in range(len(houseList) - 1):
+        x = houseToComp.distanceTo(houseList[i])
+        if x < min:
+            min = x
+    return min
+"""
 def inWater(houseList):
     h1 = houseList[-1]
     for i in range(4):
@@ -193,9 +263,9 @@ def checkOverlapMap(houseList):
     return False
 
 def inRange(h1, h2):
-    if abs(h1.x  - h2.x) < 20:
+    if abs(h1.x  - h2.x) < h1.freespace + h1.width:
         return True
-    elif abs(h1.y - h2.y) < 20:
+    elif abs(h1.y - h2.y) < h1.freespace+ h1.height:
         return True
     return False
 
@@ -209,16 +279,6 @@ def isMapInvalid(houseList):
             if h1.distanceTo(h2) < h1.freespace or h1.distanceTo(h2) < h2.freespace:
                 return True
     return False
-
-def mapFinalCheck(houseList, distList):
-    for list in distList:
-        i = 4
-        for value in list:
-            if houseList[i].freespace > value and value > 0:
-                print("value", value)
-                print(houseList[i])
-                print("index", i)
-            i+=1
 
 def overlapFinalBoss(houseList):
     counter = 0
@@ -261,52 +321,6 @@ def placeWater2():
     list.append(Water(0,0,0,0,1))
     list.append(Water(0,0,0,0,1))
     return list
-
-def placeWater3():
-    return generateRandomWater()
-
-def generateRandomWater():
-    needed_surface = 5760
-    all_bodies = [Water(0,0,0,0,1)] * 4
-    number_of_bodies = random.randint(1,4)
-    while number_of_bodies > 0:
-        if needed_surface == 0:
-            return all_bodies
-        if number_of_bodies == 1:
-            new_water_surface = needed_surface
-        else:
-            new_water_surface = random.randint(1, needed_surface)
-        new_water = generateNewBody(new_water_surface, all_bodies)
-        all_bodies[number_of_bodies - 1] = new_water
-        needed_surface -= new_water_surface
-        number_of_bodies -= 1
-    return all_bodies
-
-def generateNewBody(desired_surface, all_bodies):
-    while True:
-        width, height = getSizeWater(desired_surface)
-        x, y = getLocationWater(width, height)
-        new_water = Water(x, y, width, height, 1)
-        if noWaterOverlap(all_bodies, new_water):
-            return new_water
-
-def getSizeWater(desired_surface):
-    while True:
-        width = random.randint(1, int(desired_surface))
-        height = desired_surface/width
-        if 1 <= width / height <= 4:
-            return width, height
-
-def getLocationWater(width, height):
-    x = random.randint(0, int(160 - width))
-    y = random.randint(0, int(180 - height))
-    return x, y
-
-def noWaterOverlap(all_bodies, new_water):
-    for water in all_bodies:
-        if minDistanceBetween(water, new_water) < 0:
-            return False
-    return True
 
 def placeMaison(list):
     x = random.randint(6, 143)
@@ -355,11 +369,8 @@ def makeMap(goal,waterTactic,corner=True):
             houseList = placeWater1()
         elif waterTactic == 2:
             houseList = placeWater2()
-        elif waterTactic == 3:
-            houseList = placeWater3()
         if corner:
             numberOfMaisons = cornerMaisons(numberOfMaisons, houseList)
-
         # Plaatsing huizen:
         while numberOfMaisons != 0:
             maison = placeMaison(houseList)
@@ -381,20 +392,67 @@ def makeMap(goal,waterTactic,corner=True):
             numberOfSingles -= 1
         return houseList
 
-# maakt map returnt en lijst met alle waardes en de map met hoogste waarde
-def depthFirstSearch(trails, goal, waterTact, maisonTact):
-    max = 0
-    max_map = None
-    total = 0
-    allValues = []
-    for i in range(trails):
-        p = makeMap(goal,waterTact, maisonTact)
-        distList = initDistList(p)
-        value = valueOfMapFast(p, distList)
-        total += value
-        allValues.append(value)
-        if valueOfMapFast(p, distList) > max:
-            max = value
-            max_map = p
-    print("initial map is done")
-    return allValues,max_map
+
+def placeMaisonConstraint1(houseList, numberOfMaisons):
+    houseList.append(Maison(6, 6))
+    houseList.append(Maison(143, 163.5))
+    houseList.append(Maison(143, 6))
+    if numberOfMaisons == 3:
+        return 0
+    houseList.append(Maison(6, 163.5))
+    houseList.append(Maison(6, (180/2)))
+    houseList.append(Maison(143, (180/2)))
+    if numberOfMaisons == 6:
+        return 2
+    if numberOfMaisons == 9:
+        houseList.append(Maison(74.5, 6))
+        houseList.append(Maison((160/2) - (11/2), (180 / 2)))
+        houseList.append(Maison(74.5, 163.5))
+    else:
+        return 5
+
+def placeMaisonConstraint2(houseList, numberOfMaisons):
+    houseList.append(Maison(6, 6))
+    houseList.append(Maison(143, 163.5))
+    houseList.append(Maison(143, 6))
+    if numberOfMaisons == 3:
+        return 0
+    houseList.append(Maison(6, 163.5))
+    houseList.append(Maison(6, (180/2)))
+    houseList.append(Maison(143, (180/2)))
+    if numberOfMaisons == 6:
+        return 2
+    if numberOfMaisons == 9:
+        houseList.append(Maison(74.5, 6))
+        houseList.append(Maison((160/2) - (11/2), (180 / 2)))
+        houseList.append(Maison(74.5, 163.5))
+    else:
+        return 5
+
+
+def makeMapConstraint(goal, waterTactic):
+
+    while True:
+        # Setup
+        numberOfMaisons = int(0.15*goal)
+        numberOfBungalows = int(0.25*goal)
+        numberOfSingles = int(0.6*goal)
+        if waterTactic == 1:
+            houseList = placeWater1()
+        elif waterTactic == 2:
+            houseList = placeWater2()
+        placeMaisonConstraint1(houseList, numberOfMaisons)
+        """"
+        while numberOfMaisons != 0:
+            maison = placeMaisonConstraint(houseList)
+            if checkOverlap(houseList) == True:
+                houseList.remove(maison)
+                continue
+            numberOfMaisons -= 1
+        while numberOfBungalows != 0:
+            bungalow = placeBungalow(houseList)
+            if checkOverlap(houseList) == True:
+                houseList.remove(bungalow)
+                continuex
+            numberOfBungalows -= 1
+        
