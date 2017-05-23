@@ -4,9 +4,13 @@ import random
 import math
 import numpy as np
 
+#def linearCooling(i, verkeerd):
+#    chance =
+
 def exponentialCooling(i, verkeerd):
     chance = math.exp(float(verkeerd) / (1 / float(i + 1)))
-    return random.random() < chance
+    x = (random.random() < chance)
+    return x
 
 def SA(coolingScheme, houseList, goal, itNR, changeNum, maisonStrat):
     counter = 0
@@ -36,11 +40,13 @@ def SA(coolingScheme, houseList, goal, itNR, changeNum, maisonStrat):
                 print(newValue, "new")
                 winst += newValue - value
                 counter += 1
+                all_values.append(newValue)
             else:
                 houseList[house].x = oldX
                 houseList[house].y = oldY
                 Class.update_dist_list(houseList, distList, house - 4)
-            all_values.append(value)
+                all_values.append(newValue)
+
     print("winst =", winst)
     print("NR verplaatsingen =", counter)
     return all_values, houseList
