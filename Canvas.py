@@ -68,20 +68,3 @@ def addHouse(list):
         else:
             raise TypeError ("Item in list in not a House")
 
-# maakt map returnt en lijst met alle waardes en de map met hoogste waarde
-def mapStats(trails, waterTact, maisonTact):
-    max = 0
-    max_map = None
-    total = 0
-    allValues = []
-    for i in range(trails):
-        p = Class.makeMap(40,waterTact, maisonTact)
-        value = Class.valueOfMap(p)
-        total += value
-        allValues.append(value)
-        if Class.valueOfMap(p) > max:
-            max = Class.valueOfMap(p)
-            max_map = p
-    print("initial map is done")
-    return allValues,max_map
-
