@@ -39,15 +39,22 @@ def swapHousesback(houseList, varList):
 #Krijgt een lijst binnen en swapt duizend keer een huis, accepteert de verandering alleen als er prijstoename is
 def houseSwapper(houseList, goal, itNR):
     counter = 0
+    distList = Class.initDistList(houseList)
     for i in range(itNR):
-        oldValue = Class.valueOfMap(houseList)
+        oldValue = Class.valueOfMapFast(houseList, distList)
         newList, varList, notOutOfBounds = swapHouses(houseList, goal)
-        newValue = Class.valueOfMap(newList)
+        Class.update_dist_list(houseList, distList, varList[0]-4)
+        Class.update_dist_list(houseList, distList, varList[3]-4)
+        Class.update_dist_list(houseList, distList, varList[0]-4)
+        newValue = Class.valueOfMapFast(newList, distList)
         if (newValue > oldValue) and not Class.overlapFinalBoss(newList) and notOutOfBounds:
             counter += 1
             houseList = newList
         else:
             houseList = swapHousesback(houseList, varList)
+            Class.update_dist_list(houseList, distList, varList[0]-4)
+            Class.update_dist_list(houseList, distList, varList[3]-4)
+            Class.update_dist_list(houseList, distList, varList[0]-4)
     print(counter, "X geswapped")
     return houseList
 
@@ -118,9 +125,6 @@ def verplaatser(houseList, goal, itNR, changeNum, maisonStrat):
             Class.update_dist_list(houseList, distList, house - 4)
             newValue = Class.valueOfMapFast(houseList, distList)
             if newValue > value and not Class.overlapFinalBoss(houseList):
-                print("--------")
-                print(value, "old")
-                print(newValue, "new")
                 winst += newValue - value
                 value = newValue
                 counter += 1
