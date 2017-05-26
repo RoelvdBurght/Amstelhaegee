@@ -244,6 +244,9 @@ def overlapFinalBoss2(houseList):
             return True
     return False
 
+def placeWater0():
+    return[Water(0,0,0,0,1)]*4
+
 def placeWater1():
     list = []
     list.append(Water(17, 17, 38, 38, 1))
@@ -349,7 +352,9 @@ def makeMap(goal,waterTactic,corner=True):
         numberOfMaisons = int(0.15*goal)
         numberOfBungalows = int(0.25*goal)
         numberOfSingles = int(0.6*goal)
-        if waterTactic == 1:
+        if waterTactic == 0:
+            houseList = placeWater0()
+        elif waterTactic == 1:
             houseList = placeWater1()
         elif waterTactic == 2:
             houseList = placeWater2()

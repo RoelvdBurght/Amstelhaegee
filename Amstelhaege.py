@@ -9,48 +9,33 @@ import matplotlib.pyplot as plt
 import random
 import time
 import math
+import xlsxwriter
+workbook = xlsxwriter.Workbook('data.xlsx')
+worksheet = workbook.add_worksheet()
 
-#p = Class.makeMap(20, 1, True)
-#values, climbed = SimulatedAnnealing.SA(SimulatedAnnealing.exponentialCooling,p, 20, 1000, 1, 1)
-#test = []
-#for i in range(1000):
-#    test.append(math.exp(float(-5) / (1000 / float(i + 1))))
-""""
-p = Class.depthFirstSearch(500,40,0,1)
-q = Hillclimber.verplaatser(p,40,10000,15,1)
-q2 = Hillclimber.verplaatser(p,40,10000,10,1)
-q3 = Hillclimber.verplaatser(p,40,10000,5,1)
-q4 = Hillclimber.verplaatser(p,40,10000,3,1)
-q5 = Hillclimber.verplaatser(p,40,10000,2,1)
-finalmap = Hillclimber.verplaatser(p,40,10000,1,1)
+
+varList, p = Class.depthFirstSearch(500, 40, 0, False)
+distlist = Class.initDistList(p)
+q1 = Hillclimber.verplaatser(p, 40, 10000, 15, False)
+distlist = Class.initDistList(q1)
+worksheet.write(0,0, Class.valueOfMapFast(q1, distlist))
+worksheet.write(0,1, str(q1))
+q2 = Hillclimber.houseSwapper(q1, 40, 2500)
+distlist = Class.initDistList(q2)
+worksheet.write(1,0, Class.valueOfMapFast(q2, distlist))
+worksheet.write(1,1, str(q2))
+q3 = Hillclimber.verplaatser(q2, 40, 1000, 5, False)
+distlist = Class.initDistList(q3)
+worksheet.write(2,0, Class.valueOfMapFast(q3, distlist))
+worksheet.write(2,1, str(q3))
+
 """
-eindwaarde = 0
-finalBoss = []
-maxEindwaarde = 0
-for i in range(250):
-    print("----------------")
-    varList, p = Class.depthFirstSearch(500, 40, 1, True)
-    distlist = Class.initDistList(p)
-    beginwaarde = Class.valueOfMapFast(p, distlist)
-    print("initial value", beginwaarde)
-    q1 = Hillclimber.verplaatser(p,40,10000,15,2)
-    q2 = Hillclimber.houseSwapper(q1, 40, 1000)
-    q3 = Hillclimber.verplaatser(q2,40,10000,8,2)
-    q4 = Hillclimber.houseSwapper(q3, 40, 1000)
-    q5 = Hillclimber.verplaatser(q4,40,10000,3,2)
-    q6 = Hillclimber.houseSwapper(q5, 40, 1000)
-    finalmap = Hillclimber.verplaatser(q6,40,10000,1,2)
-    newdistlist = Class.initDistList(finalmap)
-    eindwaarde = Class.valueOfMapFast(finalmap, newdistlist)
-    print("totale winst =",eindwaarde - beginwaarde)
-    if eindwaarde > maxEindwaarde:
-        maxEindwaarde = eindwaarde
-        finalBoss = finalmap
-        print("***********")
-        print("Boss", eindwaarde)
-        print("***********")
-
-Canvas.addHouse(finalBoss)
+q4 = Hillclimber.houseSwapper(q3, 40, 2500)
+q5 = Hillclimber.verplaatser(q4, 40, 100000, 3, False)
+q6 = Hillclimber.houseSwapper(q5, 40, 2500)
+finalBoss = Hillclimber.verplaatser(q6, 40, 100000, 1, False)
+"""
+Canvas.addHouse(q3)
 mainloop()
 
 #x = range(len(test))

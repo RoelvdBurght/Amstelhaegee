@@ -2,6 +2,14 @@ import Class
 import random
 import numpy as np
 
+
+#Checkt of de coördinaten x en y voor een bepaald type huis buiten de kaart vallen
+#Neemt als input een huis object en 2 nieuwe coördinaten
+def checkHouseOutOfBounds(house, x, y):
+    if (x - house.width - house.freespace) < 0 or (y - house.height - house.freespace) < 0 or (x + house.width+house.freespace) > 160 or (y + house.height+house.freespace) > 180:
+        return True
+    return False
+
 #krijgt een lijst binnen en swapt 2 huizen, houd geen rekening met overlap en dergelijke
 def swapHouses(list1, goal):
     if goal == 20:
@@ -36,6 +44,7 @@ def swapHousesback(houseList, varList):
     houseList[house2].y = varList[5]
     return houseList
 
+
 #Krijgt een lijst binnen en swapt duizend keer een huis, accepteert de verandering alleen als er prijstoename is
 def houseSwapper(houseList, goal, itNR):
     counter = 0
@@ -59,12 +68,41 @@ def houseSwapper(houseList, goal, itNR):
     return houseList
 
 
-#Checkt of de coördinaten x en y voor een bepaald type huis buiten de kaart vallen
-#Neemt als input een huis object en 2 nieuwe coördinaten
-def checkHouseOutOfBounds(house, x, y):
-    if (x - house.width - house.freespace) < 0 or (y - house.height - house.freespace) < 0 or (x + house.width+house.freespace) > 160 or (y + house.height+house.freespace) > 180:
-        return True
-    return False
+def swapHouses2(houseList, h1, h2):
+    h1.x = x1
+    h1.y = y1
+    h2.x = x2
+    h2.y = y2
+    varList =[h1, x1, y1, h2, x2, y2]
+    houseList[h1].x = x2
+    houseList[h1].y = y2
+    houseList[h2].x = x1
+    houseList[h2].y = y1
+    if checkHouseOutOfBounds(varList[0], varList[1], varList[2]) or checkHouseOutOfBounds(varList[3], varList[4], varList[5]):
+        return (varList, False)
+    return(varList, True)
+"""
+def houseSwapper2(houseList, goal):
+    counter = 0
+    distList = Class.initDistList(houseList)
+    varList = []
+    if goal == 20:
+        itNR = 111
+    elif goal == 40:
+        itNR == 444
+    elif goal == 60:
+        itNR = 999
+    for house in houseList[:4]:
+        if house.width == 11:
+            for checkHouse in houseList[:4]:
+                if checkHouse.width == 10 or checkHouse.width == 8:
+                    value = Class.valueOfMapFast(houseList, distList)
+                    varlist, outOfBounds = swapHouses2(houseList, house, checkHouse)
+
+"""
+
+
+
 
 """
 Neemt als input: houseList = de lijst met huizen
