@@ -245,7 +245,7 @@ def overlapFinalBoss2(houseList):
     return False
 
 def placeWater0():
-    return [Water(0,0,0,0,1)] * 4
+    return[Water(0,0,0,0,1)]*4
 
 def placeWater1():
     list = []
@@ -356,7 +356,9 @@ def makeMap(goal,waterTactic,corner=True):
         numberOfMaisons = int(0.15*goal)
         numberOfBungalows = int(0.25*goal)
         numberOfSingles = int(0.6*goal)
-        if waterTactic == 1:
+        if waterTactic == 0:
+            houseList = placeWater0()
+        elif waterTactic == 1:
             houseList = placeWater1()
         elif waterTactic == 2:
             houseList = placeWater2()
@@ -395,13 +397,11 @@ def depthFirstSearch(trails, goal, waterTact, maisonTact):
     total = 0
     allValues = []
     for i in range(trails):
-        print("*")
         p = makeMap(goal,waterTact, maisonTact)
         distList = initDistList(p)
         value = valueOfMapFast(p, distList)
         total += value
         allValues.append(value)
-        mapFinalCheck(p, distList)
         if valueOfMapFast(p, distList) > max:
             max = value
             max_map = p
