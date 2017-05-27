@@ -50,17 +50,17 @@ def sortList(houseList):
             houseList.insert(0, houseList[i])
     return houseList
 
-# tieft die huizen op de canvas
+# Plaatst huizen op de canvas
 # input: lijst gemaakt door makeMap
 def addHouse(list):
     for i in range(len(list)):
-        if list[i].width == 8:
+        if list[i].freespace == 2:
             addSingle(list[i].x, list[i].y)
             addNumber(i, list[i])
-        elif list[i].width == 10:
+        elif list[i].freespace == 3:
             addBungalow(list[i].x, list[i].y)
             addNumber(i, list[i])
-        elif list[i].width == 11:
+        elif list[i].freespace == 6:
             addMaison(list[i].x, list[i].y)
             addNumber(i, list[i])
         elif list[i].freespace == 0:

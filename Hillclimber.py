@@ -39,21 +39,30 @@ def swapHousesback(houseList, varList):
 #Krijgt een lijst binnen en swapt duizend keer een huis, accepteert de verandering alleen als er prijstoename is
 def houseSwapper(houseList, goal, itNR):
     counter = 0
+    all_values = []
+    distList = Class.initDistList(houseList)
     for i in range(itNR):
-        oldValue = Class.valueOfMap(houseList)
+        oldValue = Class.valueOfMapFast(houseList, distList)
         newList, varList, notOutOfBounds = swapHouses(houseList, goal)
-        newValue = Class.valueOfMap(newList)
+        Class.update_dist_list(houseList, distList, varList[0]-4)
+        Class.update_dist_list(houseList, distList, varList[3]-4)
+        Class.update_dist_list(houseList, distList, varList[0]-4)
+        newValue = Class.valueOfMapFast(newList, distList)
         if (newValue > oldValue) and not Class.overlapFinalBoss(newList) and notOutOfBounds:
             counter += 1
             houseList = newList
+            all_values.append(newValue)
         else:
             houseList = swapHousesback(houseList, varList)
+            Class.update_dist_list(houseList, distList, varList[0]-4)
+            Class.update_dist_list(houseList, distList, varList[3]-4)
+            Class.update_dist_list(houseList, distList, varList[0]-4)
+            all_values.append(Class.valueOfMapFast(houseList, distList))
     print(counter, "X geswapped")
-    return houseList
+    return all_values, houseList
 
-
-#Checkt of de coördinaten x en y voor een bepaald type huis buiten de kaart vallen
-#Neemt als input een huis object en 2 nieuwe coördinaten
+#Checkt of de coordinaten x en y voor een bepaald type huis buiten de kaart vallen
+#Neemt als input een huis object en 2 nieuwe coordinaten
 def checkHouseOutOfBounds(house, x, y):
     if (x - house.width - house.freespace) < 0 or (y - house.height - house.freespace) < 0 or (x + house.width+house.freespace) > 160 or (y + house.height+house.freespace) > 180:
         return True
@@ -96,10 +105,11 @@ def getIndex(goal, maisonStrat):
     else:
         return random.randint(4, goal + 3)
 
-def verplaatser(houseList, goal, itNR, changeNum, maisonStrat):
+def verplaatser(houseList, goal, itNR, changeNum, maisonStrat, randomChangeNum=False):
     counter = 0
     winst = 0
     distList = Class.initDistList(houseList)
+    all_values = []
   #--------------------1-------------------------#
     for i in range(itNR):
         value = Class.valueOfMapFast(houseList, distList)
@@ -107,8 +117,12 @@ def verplaatser(houseList, goal, itNR, changeNum, maisonStrat):
  #--------------------2--------------------------#
         oldX = houseList[house].x
         oldY = houseList[house].y
-        lowerX, higherX = (oldX - changeNum), (oldX + changeNum)
-        lowerY, higherY = (oldY - changeNum), (oldY + changeNum)
+        if randomChangeNum:
+            lowerX, higherX = (oldX - random.randint(1, changeNum)), (oldX + random.randint(1, changeNum))
+            lowerY, higherY = (oldY - random.randint(1, changeNum)), (oldY + random.randint(1, changeNum))
+        else:
+            lowerX, higherX = (oldX - changeNum), (oldX + changeNum)
+            lowerY, higherY = (oldY - changeNum), (oldY + changeNum)
         newX = random.randint(round(lowerX), round(higherX))
         newY = random.randint(round(lowerY), round(higherY))
  #--------------------3--------------------------#
@@ -118,16 +132,17 @@ def verplaatser(houseList, goal, itNR, changeNum, maisonStrat):
             Class.update_dist_list(houseList, distList, house - 4)
             newValue = Class.valueOfMapFast(houseList, distList)
             if newValue > value and not Class.overlapFinalBoss(houseList):
-                print("--------")
-                print(value, "old")
-                print(newValue, "new")
                 winst += newValue - value
-                value = newValue
                 counter += 1
+                all_values.append(newValue)
             else:
                 houseList[house].x = oldX
                 houseList[house].y = oldY
                 Class.update_dist_list(houseList, distList, house - 4)
+                all_values.append(value)
+        else:
+            all_values.append(value)
+
     print("winst =", winst)
     print("NR verplaatsingen =", counter)
-    return houseList
+    return all_values, houseList
