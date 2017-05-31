@@ -9,41 +9,8 @@ import matplotlib.pyplot as plt
 import random
 import time
 import math
-import xlsxwriter
-workbook = xlsxwriter.Workbook('data.xlsx')
-worksheet = workbook.add_worksheet()
+import xlwt
 import copy
-
-
-varList, p = Class.depthFirstSearch(500, 40, 0, False)
-distlist = Class.initDistList(p)
-q1 = Hillclimber.verplaatser(p, 40, 10000, 15, False)
-distlist = Class.initDistList(q1)
-worksheet.write(0,0, Class.valueOfMapFast(q1, distlist))
-worksheet.write(0,1, str(q1))
-q2 = Hillclimber.houseSwapper(q1, 40, 2500)
-distlist = Class.initDistList(q2)
-worksheet.write(1,0, Class.valueOfMapFast(q2, distlist))
-worksheet.write(1,1, str(q2))
-q3 = Hillclimber.verplaatser(q2, 40, 1000, 5, False)
-distlist = Class.initDistList(q3)
-worksheet.write(2,0, Class.valueOfMapFast(q3, distlist))
-worksheet.write(2,1, str(q3))
-
-"""
-q4 = Hillclimber.houseSwapper(q3, 40, 2500)
-q5 = Hillclimber.verplaatser(q4, 40, 100000, 3, False)
-q6 = Hillclimber.houseSwapper(q5, 40, 2500)
-finalBoss = Hillclimber.verplaatser(q6, 40, 100000, 1, False)
-"""
-Canvas.addHouse(q3)
-mainloop()
-
-#x = range(len(test))
-#y = test
-#plt.plot(x, y)
-#plt.show()
-
 
 
 def codeHouseList(houseList):
@@ -64,3 +31,31 @@ def decodeHouseList(codedHouseList):
         elif tuple[4] == 6:
             houseList.append(Class.Maison(tuple[0], tuple[1]))
     return houseList
+
+def decoder(houseList):
+    decodedList = []
+    for house in houseList:
+        tempList = []
+        tempList.extend((house.x, house.y, house.freespace, house.width, house.height))
+        decodedList.append(tempList)
+    return str(decodedList)
+
+def encoder(decodedList):
+    houseList = []
+    for list in decodedList:
+        if list[2] == 2:
+            single = Class.SingleHouse(list[0],list[1])
+            houseList.append(single)
+        elif list[2] == 3:
+            bunga = Class.Bungalow(list[0],list[1])
+            houseList.append(bunga)
+        elif list[2] == 6:
+            maison = Class.Maison(list[0],list[1])
+            houseList.append(maison)
+        elif list[2] == 0:
+            water = Class.Water(list[0], list[1], list[3], list[4], 0)
+            houseList.append(water)
+    return houseList
+
+p = encoder([[17, 17, 0, 38, 38], [105, 17, 0, 38, 38], [17, 125, 0, 38, 38], [105, 125, 0, 38, 38], [6, 6, 6, 11, 10.5], [143, 163.5, 6, 11, 10.5], [143, 6, 6, 11, 10.5], [123, 100, 3, 10, 7.5], [20, 87, 3, 10, 7.5], [78, 163, 3, 10, 7.5], [90, 108, 3, 10, 7.5], [50, 105, 3, 10, 7.5], [76, 3, 2, 8, 8], [74, 38, 2, 8, 8], [46, 72, 2, 8, 8], [28, 106, 2, 8, 8], [76, 130, 2, 8, 8], [117, 76, 2, 8, 8], [77, 105, 2, 8, 8], [54, 83, 2, 8, 8], [91, 120, 2, 8, 8], [74, 72, 2, 8, 8], [6, 117, 2, 8, 8], [36, 166, 2, 8, 8]])
+values, climbed = SA.SA(SA.exponentialCooling, 50000, 1000, p, 20, 10000, 20, True, True)

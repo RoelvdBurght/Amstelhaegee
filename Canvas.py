@@ -67,4 +67,3 @@ def addHouse(list):
             addWater(list[i].x, list[i].y, list[i].width, list[i].height)
         else:
             raise TypeError ("Item in list in not a House")
-

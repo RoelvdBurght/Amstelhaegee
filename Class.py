@@ -347,6 +347,25 @@ def cornerMaisons(numberOfMaisons, houseList):
     else:
         return 5
 
+def cornerInWater(houseList, numberOfMaisons):
+    if numberOfMaisons == 0:
+        end = 8
+    else:
+        end = 9
+    for i in range(5, end):
+        if inWater(houseList[:i]):
+            return True
+    return False
+
+def cornerMaisonRandomWater(numberOfMaisons):
+    while True:
+        houseList = generateRandomWater()
+        numberOfMaisons = cornerMaisons(numberOfMaisons, houseList)
+        print(numberOfMaisons)
+        if cornerInWater(houseList, numberOfMaisons):
+            continue
+        return houseList, numberOfMaisons
+
 # Eerste argument is het aantal te plaatsen huizen
 # Tweede argument is de plaatsing van het water. Mogelijkheden zijn 1 of 2.
 # Derde (optionele) argument bepaald of de maisons zoveel mogelijk in de hoek worden geplaatst.
@@ -356,18 +375,21 @@ def makeMap(goal,waterTactic,corner=True):
         numberOfMaisons = int(0.15*goal)
         numberOfBungalows = int(0.25*goal)
         numberOfSingles = int(0.6*goal)
-        if waterTactic == 0:
-            houseList = placeWater0()
-        elif waterTactic == 1:
-            houseList = placeWater1()
-        elif waterTactic == 2:
-            houseList = placeWater2()
-        elif waterTactic == 3:
-            houseList = placeWater3()
-        elif waterTactic == 5:
-            houseList = placeWater5()
-        if corner:
-            numberOfMaisons = cornerMaisons(numberOfMaisons, houseList)
+        if corner and waterTactic == 3:
+            houseList, numberOfMaisons = cornerMaisonRandomWater(numberOfMaisons)
+        else:
+            if waterTactic == 0:
+                houseList = placeWater0()
+            elif waterTactic == 1:
+                houseList = placeWater1()
+            elif waterTactic == 2:
+                houseList = placeWater2()
+            elif waterTactic == 3:
+                houseList = placeWater3()
+            elif waterTactic == 5:
+                houseList = placeWater5()
+            if corner:
+                numberOfMaisons = cornerMaisons(numberOfMaisons, houseList)
 
         # Plaatsing huizen:
         while numberOfMaisons != 0:
@@ -388,6 +410,7 @@ def makeMap(goal,waterTactic,corner=True):
                 houseList.remove(single)
                 continue
             numberOfSingles -= 1
+        numberOfMaisons = 0
         return houseList
 
 # maakt map returnt en lijst met alle waardes en de map met hoogste waarde
@@ -405,5 +428,5 @@ def depthFirstSearch(trails, goal, waterTact, maisonTact):
         if valueOfMapFast(p, distList) > max:
             max = value
             max_map = p
-    print("initial map is done")
+    #print("initial map is done")
     return allValues,max_map
